@@ -1,0 +1,1063 @@
+\documentclass[12pt]{article}
+
+\setlength\paperheight{11in}
+\setlength\paperwidth{8.5in}
+\usepackage[margin=1.5in]{geometry}
+
+%\usepackage{adjustbox, amsmath, amssymb, authblk, bbm, enumerate, etoc, graphicx, natbib, nicefrac, pdflscape, setspace, siunitx, subcaption, threeparttable, tikz, xcolor,multirow,lscape}
+
+
+\usepackage[table]{xcolor} % for color in Tables
+%\usepackage{amssymb,amsmath,amsfonts,eurosym,geometry,ulem,graphicx,caption,color,
+%setspace,sectsty,comment,footmisc,caption,natbib,pdflscape,subfigure,array,hyperref,
+%multirow}
+\usepackage{amssymb,amsmath,amsfonts,eurosym,geometry,ulem,graphicx,caption,color,
+setspace,sectsty,comment,footmisc,caption,natbib,pdflscape,array,
+multirow,tikz,bbm,lscape}
+%\usepackage{tikz} % for drawing
+%\usepackage{bbm} % for double lined 1
+\usepackage[flushleft]{threeparttable} % for table notes
+\usepackage[capposition=top]{floatrow}
+
+%\usepackage[demo]{graphicx}
+\usepackage{subcaption} % for subtable
+
+\usepackage{scalerel}
+
+\renewcommand\thesubfigure{\textsc{\alph{subfigure}}} % Upper case in reference of subfigures.
+
+
+\newcommand\reallywidehat[1]{\arraycolsep=0pt\relax%
+\begin{array}{c}
+\stretchto{
+  \scaleto{
+    \scalerel*[\widthof{\ensuremath{#1}}]{\kern-.5pt\bigwedge\kern-.5pt}
+    {\rule[-\textheight/2]{1ex}{\textheight}} %WIDTH-LIMITED BIG WEDGE
+  }{\textheight} % 
+}{0.5ex}\\           % THIS SQUEEZES THE WEDGE TO 0.5ex HEIGHT
+#1\\                 % THIS STACKS THE WEDGE ATOP THE ARGUMENT
+\rule{-1ex}{0ex}
+\end{array}
+}
+
+
+\usetikzlibrary{trees}
+\definecolor{navy}{RGB}{0,0,125}
+\usepackage[colorlinks=true, linkcolor = navy, urlcolor = navy, citecolor = navy]{hyperref}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric,arrows}
+\usepackage[labelfont=sc]{caption}
+\usepackage[section]{placeins}
+\usepackage{cleveref}
+\usepackage{soul}
+\usepackage{inconsolata}
+\onehalfspacing
+\crefname{appendix}{}{}
+\crefname{table}{Table}{Tables}
+\crefname{figure}{Figure}{Figures}
+\crefname{equation}{equation}{equations}
+\crefname{section}{Section}{Sections}
+
+\normalem
+
+\onehalfspacing
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+\newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+
+\newtheorem{hyp}{Hypothesis}
+\newtheorem{subhyp}{Hypothesis}[hyp]
+\renewcommand{\thesubhyp}{\thehyp\alph{subhyp}}
+
+\newcommand{\red}[1]{{\color{red} #1}}
+\newcommand{\blue}[1]{{\color{blue} #1}}
+\DeclareMathOperator*{\argmax}{arg\,max} % for \argmax
+\newcommand{\E}{\mathbb{E}} % for the expectation operator
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\arraybackslash\hspace{0pt}}m{#1}}
+
+\geometry{left=1.0in,right=1.0in,top=1.0in,bottom=1.0in}
+
+
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+\definecolor{lavendergray}{rgb}{0.77, 0.76, 0.82}
+
+\begin{document}
+
+\begin{titlepage}
+% \title{Does Liberalizing Factor Markets Raise Aggregate Markups?\\ \large Misallocation under Heterogeneous Markups and Non-Constant returns to scale}
+\title{Productivity Cost of Distortions in China
+\thanks{We are grateful to Jaap H. Abbring, Christoph Walsh, and Jeffrey R. Campbell for their patience, support, and guidance throughout this project. This paper has benefited from insightful discussions with and comments from Daniel Xu, Has van Vlokhoven, Malik \c{C}\"ur\"uk, 
+Guiying Laura Wu, Chang-Tai Hsieh, Giuseppe Forte, Jo Van Biesebroeck, Jan De Loecker, Frank Verboven as well as participants at the Tilburg Structural Econometrics Group, Tilburg University GSS seminars, the IO seminar series at KU Leuven, the ENTER Jamboree, China International Conference in Macroeconomics, the IAAE annual conference, the AMES China meeting, China Center for Economic Research's Summer Institute, the NSE International Annual Workshop, and EEA-ESEM. This project is supported by CentER and IAAE Student Travel Grant. Xiaoyue is also thankful for the never-ending support and confidence from Edi Karni.}} % title with thanks
+\author{Xiaoyue Zhang\thanks{MIT Sloan, corresponding author, email: xyzhang1@mit.edu} \and Junjie Xia \thanks{Central University of Finance and Economics and Peking University, email: junjiexia@nsd.pku.edu.cn}}
+%\author{Hyunwoo Park\thanks{abc} \and John Smith\thanks{abc}} % two authors with thanks
+\date{\today}
+\maketitle
+%
+%\begin{center}
+%\href{https://xyzhang9.github.io/papers/heterogeneousMarkupTFPGains.pdf}{The Latest Version}
+%\end{center}
+
+\begin{abstract}
+\frenchspacing
+\noindent Predicted total factor productivity (TFP) gains in China from removing the distortions in the allocation of production factor under \citet{hsiehMisallocationManufacturingTFP2009}'s framework are, in theory, sensitive to the assumption that demand elasticity is 3 for all the firms and that Chinese firms have the same technology as American firms. However, there is little empirical evidence on how the predicted TFP gains would change if these assumptions are relaxed. Using the framework developed by \citet{zhangFactorShares}, we find that the average demand elasticity is around 8 with large dispersion and that American firms are more capital-intensive than Chinese firms. 20\% of the TFP gains found by \citet{hsiehMisallocationManufacturingTFP2009} are caused by replacing the Chinese production technology with US technology instead of distortions. Allowing heterogeneous demand elasticities reduce the predicted gains by about 60 percentage points.
+
+% The large variation in demand elasticities has a minor impact on predicted TFP gains, but using the estimated average demand elasticity implies more than tripled predicted TFP gains. The technological differences between Chinese and American firms do not affect the predicted TFP gains through the estimated input distortions but through aggregation across firms and through the inferred productivity. Our estimates show a $45\%$ TFP gain from removing the input distortions in China in 2005.
+
+
+\vspace{0in}
+\noindent\textbf{Keywords:} Distortions, heterogeneous demand elasticities, TFP gains\\
+%\vspace{0in}\\
+%\noindent\textbf{JEL Codes:} TBA, TBA\\
+
+%\bigskip
+\end{abstract}
+\setcounter{page}{0}
+\thispagestyle{empty}
+
+\end{titlepage}
+\pagebreak \newpage
+
+%\doublespacing
+\onehalfspacing
+%\frenchspacing 
+\section{Introduction} \label{sec:introduction}
+%\setcounter{page}{52}
+Standard competitive-market theory predicts that equalizing the marginal revenues of production factors across firms brings efficiency gains (\citet{melitz_impact_2003}, \citet{restucciaPolicyDistortionsAggregate2008}), and an inefficient allocation of production inputs creates dispersion in the marginal revenues. Removing the variation in marginal revenues  or equating the variation in developing countries with the one in developed countries provides the predicted TFP gains from removing input distortions. This method was introduced by \citet{hsiehMisallocationManufacturingTFP2009} (hereafter HK) and has been widely used to evaluate the impact of distortions in allocating production factors. The distortions studied include institutional disturbances and socio-economic restrictions on firms but exclude firms' market power. They also include input distortions that prevent firms from using production inputs at their market prices or from freely adjusting their usage. However, the predicted TFP gains in HK rely on the assumption that all the firms' demand elasticities being 3, and that a developing country and a developed country share the same technology. \citet{NBERw24199} shows how these assumptions can bias the predicted TFP gains in theory but whether predicted TFP gains are sensitive to these assumptions in practice remains unclear. 
+
+These assumptions can bias predicted TFP gains in empirical studies if the assumptions are bad descriptions of empirical data and if the predicted TFP gains are sensitive to the assumptions. More specifically, the assumption of homogeneous demand elasticity may be too restrictive when firms actually face heterogeneous demand elasticities. However, whether this assumption on demand elasticities causes a large bias in the predicted TFP gains depends on how sensitive the predicted TFP gains are to dispersion in demand elasticities. Broadly speaking, if an assumption, on the one hand, allows a model to be tractable, and, on the other hand, does not cause a large bias in empirical results, it can still be a reasonable assumption. In this paper, we first use estimated demand and production parameters to examine how well the assumptions in HK can describe the Chinese firm-level survey data. We then relax the assumptions one by one to show whether the predicted TFP gains are sensitive to the assumptions. We use the framework developed in and the same data as in \citet{zhangFactorShares} (hereafter ZX), where production parameters and demand elasticities are estimated using Chinese firm-level survey data in 2005, and find that the average demand elasticity is around 8 and there is large dispersion in demand elasticities, and that American firms are more capital intensive than Chinese firms. The variation in demand elasticities across industries explain 20\% of the predicted TFP gains whereas the variation within industries has a minor impact on predicted TFP gains. Using the average of estimated demand elasticity triples predicted TFP gains as apposed to an assume elasticity of 3. The technological differences between Chinese and American firms do not affect the predicted TFP gains through the estimated input distortions but through aggregation across firms and the inferred firm productivity. Using ZX's estimates and if we assume no fixed costs in the observed total costs, removing input and output distortions gives a $300\%$ TFP gain; if 20\% of the observed total costs are fixed costs, the predicted TFP gains are 100\%. 
+
+In ZX, the production parameters are estimated using firms' observed factor shares under the assumption that the modes of capital and output distortions in an industry are both 0, that firms' production functions are Cobb-Douglas with constant returns to scale, and that firms from the same industry have the same production functions apart from the Hicks-Neutral firm-specific productivity. The last two assumptions on production functions imply that the production elasticities are the same inside an industry. Demand elasticities are estimated using observed firm-level revenue and cost data, and demand elasticities are allowed to differ within an industry by allowing each industry to consist of a high-demand-elasticity nest and a low-demand-elasticity nest. The demand structure has nested constant elasticities of substitution (nest CES). The elasticities of substitution between nests are assumed to be 1, whereas the within-nest ones are larger than one and are estimated using firm-level data. We follow ZX by allowing more variation in demand elasticities than production elasticities, i.e. production elasticities are allowed to vary inside an industry while production elasticities are constant, because \citet{autorFallLaborShare2020} find empirical evidence that production inputs are reallocated within industries among firms with different demand elasticities. In theory, allowing these heterogeneous demand elasticities can affect the estimation of the other parameters, including input distortions and production elasticities, and therefore affect the predicted TFP gains. Input distortions are firm specific and are the gap between firms' marginal revenues of an input and the market price of the input. We assume that the input markets are perfectly competitive in the absence of input distortions, in the sense that firms are price takers and face the same market prices. 
+
+Using the estimates of ZX, we find that removing the input distortions in China would cause a $310\%$ TFP gain higher than the $87\%$ in HK, among which reallocation within industry leads to a $297\%$ TFP gain while reallocation across industries causes a $3\%$ gain. 
+
+We then do experiments where we relax the assumptions imposed in HK one by one. Replacing the value 3 assumed for demand elasticities in HK by the average of ZX's estimates, the predicted TFP gains would increase by more than three times. The predicted TFP gains are 50 percentage points smaller when replacing the estimated average by estimated demand elasticities. This change is mainly driven by variation in demand elasticities across industries but not within industries. Using estimated production elasticities would reduce the predicted TFP gains by about 50 percentage points. This implies that assuming homogeneous demand elasticities and using US production elasticities would raise the predicted TFP gains by 100 percentage points, which is about 1/3 of our benchmark result. \label{par:ch3KeyResults}
+
+
+%We apply our model to Chinese data on the year 2005 and find that predicted TFP gains from reallocating resources within industries are $43.9\%$, which is less than the $86.6\%$ predicted by HK. Applying our model to other years is straightforward and we find similar results when using data on 2001.\footnote{2001 is chosen because HK also reports 2001, which makes comparison convenient. We do not pick 2004 which is also reported in HK because the data quality in 2001 is better.} When taking into account the gains from reallocating resources across industries, TFP gains are $50.6\%$. The labor income share increases by $7.4$ percentage points to $27.2\%$. In a counterfactual scenario of homogeneous demand elasticities where all other primitives are the same as our estimators, predicted TFP gains are similar but the increase in labor income share is higher. More specifically, when demand elasticities are $8.5$, the average of our estimated demand elasticities, the labor income share increases by $11.4$ percentage points while total TFP gains are $51.8\%$ almost the same as the $50.6\%$ under heterogeneous demand elasticities. This indicates changes in TFP gains are not always informative about changes in the labor income share. Failing to account for heterogeneous markups may miss the impact on average workers. Furthermore, our estimated distortions suggest that SOEs are more likely to overuse labor and capital compared to domestic private firms. This is consistent with the fact that SOEs tend to have more favorable financial access but have difficulties in reducing labor costs, as they use more permanent labor contracts.  
+
+%Relaxing the assumptions imposed by HK provides empirical evidence on the importance of using parameters estimated from microdata. If HK's low demand elasticities are replaced with the average of our estimates, 8.5, predicted TFP gains from reallocating resources within industries rise to $362.3\%$. They drop slightly but are still $298.6\%$ when allowing heterogeneous demand elasticities. These numbers shrink to $63.8\%$ and $59.2\%$ once use our estimated production elasticities. This pattern calls attention to the sensitivity of predicted TFP gains to these parameters and suggests the importance of using our estimation method.
+%the importance of using estimated demand elasticities and relaxing the assumption of constant returns to scale in predicting TFP gains.
+
+%This paper contributes to the literature of measuring the efficiency gains from removing input distortions by introducing a new way of using firm-level data to estimate the parameters required for calculating the predicted TFP gains. Despite that the identification methods are different, our estimates are inside the $30-50\%$ range found by HK and \citet{restucciaPolicyDistortionsAggregate2008}.
+
+This paper complements the critique of \citet{NBERw24199} by reviewing how to interpret the predicted TFP gains estimated in HK when some of the assumptions imposed in HK are violated. \citet{NBERw24199} criticizes that failing to account for heterogeneous demand elasticities can contaminate the inferred input distortions by variation in demand elasticities. We find that if the errors in estimated input distortions are the same for firms inside an nest, the predicted TFP gains are independent from the errors because only the dispersion of input distortions inside a nest affects the predicted TFP gains not the level of input distortions. Therefore, allowing each nest to have its own demand elasticities does not affect the predicted TFP gains through the value of input distortions. However, the value of the demand elasticities affects how the impact of input distortions is aggregated and consequently affects the predicted TFP gains through the aggregation. Similarly, if the production elasticities are unknown and the estimation of production elasticities requires some knowledge about demand elasticities, failing to account for heterogeneous demand elasticities can affect the estimated production elasticities and therefore the predicted TFP gains through the aggregation but not through the values of the input distortions.
+
+
+
+%Our paper demonstrates that predicted total factor productivity (TFP) gains under \citet{hsiehMisallocationManufacturingTFP2009}'s framework (hereafter HK) are highly sensitive to demand elasticities and returns to scale. Simultaneously estimating them is difficult. Our primary contribution is to develop an empirical framework allowing for an arbitrary distribution of firm-level markups and use microdata to estimate industry-specific production elasticities, within-industry type-specific demand elasticities when types are not observed, and firm-specific distortions. In our model, distortions cause the variation of the marginal revenues of capital and labor. Our framework does not impose constant returns to scale and is able to fit the large variation in firm-level markups. Therefore, it is robust to errors in the measurement of distortions caused by heterogeneous demand elasticities and is robust to biases in predicted efficiency gains that appear when efficiency gains are from equalizing revenue-based total factor productivity (TFPR) used in HK. This equalizing-TFPR approach is valid only under constant returns to scale and constant demand elasticities which, however, are often violated in empirical work. Moreover, the predicted changes in the labor income share using our framework can offer insights into the welfare impact of heterogeneous markups on labor.
+
+%To quantify the impact of misallocation on the labor income share, we develop a structural model that allows for non-constant returns to scale and heterogeneous markups using parameters estimated from micro data. In our model, distortions cause the variation of the marginal revenues of capital and labor. Our primary contribution is to provide a framework that is robust to errors in the measurement of distortions caused by heterogeneous demand elasticities and is robust to biases in predicted efficiency gains that appear when efficiency gains are from equalizing revenue based total factor productivity, i.e. TFPR (\citet{hsiehMisallocationManufacturingTFP2009},thereafter HK). This equalizing-TFPR approach is valid only under constant returns to scale and constant demand elasticities which, however, are often violated in empirical works. Our paper demonstrates that predicted total factor productivity (TFP) gains are highly sensitive to demand elasticities and returns to scale. Therefore, it is important to estimate these parameters using micro data in stead of, for example, calibrating using American firms' parameters or artificially imposing a value for demand elasticities. Similarly, it is better to use estimated production elasticities based on micro data rather than assuming the sum of labor and capital's production elasticities is 1. Moreover, the predicted changes in the labor income share using our framework can offer insights into the welfare impact of heterogeneous markups on labor.
+
+%Directly measuring the source of misallocation is difficult and sometimes impossible when the source is unclear or when multiple sources are at work. Following HK's idea of identifying the effect of misallocation without specifying the underlying sources, we use dispersion in the marginal revenues of labor and capital to measure misallocation. A key feature of our model is that we do not rely on production elasticities of firms in other countries. HK uses American firms' production elasticities as the production elasticities of Chinese and Indian firms when estimating firm-specific distortions. Instead, we simultaneously estimate production elasticities and distortions using data on the labor and capital shares under a flexible distribution of distortions.
+
+%The difficulty in estimating production elasticities is that observed capital and labor income shares are affected by demand elasticities, distortions, and production elasticities. While demand elasticities are estimated in a separate step beforehand, we still need to estimate production elasticities and distortions. Without any parametric restrictions, this model is not identified. We disentangle production elasticities from distortions by allowing a flexible distribution of distortions and imposing constant production elasticities within industries.\footnote{The latter is a standard assumption in the literature of misallocation, while the former is a convenient and practical feature of our estimation strategy.} When production elasticities are the same within an industry, variation in observed firm-level capital and labor income shares reflects distortions after controlling for differences in markups. Some firms may hire too much capital or labor so that the marginal revenue is lower than the rental rate of capital and labor, which indicates negative distortions. In contrast, other firms may hire too little capital or labor, exhibiting higher marginal revenues and positive distortions. Intuitively, positive distortions happen when firms face obstacles in acquiring labor or capital, and negative distortions take place when firms enjoy subsidies or favorable access to financial and labor markets. This idea of negative and positive distortions is also used by \citet{restucciaPolicyDistortionsAggregate2008} to model misallocation. The advantage of our flexible distribution of distortions is that it allows the distribution of positive distortions to differ from that of negative distortions and also allows the distributions to vary across industries. This captures the idea that the mechanism behind positive distortions can be completely different from that behind negative ones and the mechanism may vary across industries. Furthermore, an industry's probability of having positive distortions is a free parameter that is industry specific so that we do not need to assume a ratio of positive distortions in an industry ex ante.
+
+%In addition, accommodating the large variation of markups is challenging under a constant-elasticity-of-substitution (CES) demand because it requires constant demand elasticities and therefore constant markups. Nested CES allows demand elasticities and markups to vary across nests but not within nests. An arbitrary nested CES is not tractable because it is not identifiable without parametric restrictions. In general, there are two channels through which firms' markups vary: different demand elasticities and unexpected cost shocks that change firms' realized marginal costs. The latter occurs when firms face price rigidity so that they can not modify prices when marginal costs change. We overcome the challenge of accommodating heterogeneous markups using a combination of nested CES demand and unexpected idiosyncratic cost shocks. We solve the tractability issue by specifying the finest industry category observed as parent nests and use the model to estimate the number of unobserved types within an industry. The remaining variation of markups is explained by cost shocks. Using cost shocks to capture excessive variation in markups under CES demand framework is employed in \citet{atkeson_pricing--market_2008}. Its firms observe cost shocks when they set prices, and cost shocks are used to explain excessive variation in prices among domestic markets and different foreign markets through varying market structures. However, in \citet{atkeson_pricing--market_2008}, firms in the same sector face the same cost shocks, which means cost shocks can not help explain markup variation within a sector. Our cost shocks are realized after firms set price and are firm specific. This allows us to accommodate any markup variation within an industry which is the modeling counterpart of a sector in \citet{atkeson_pricing--market_2008}.
+
+%We do not ex ante impose a positive correlation between markups and market shares that results from a positive correlation between markups and productivity. Although studies on trade and domestic markets using American firms (\citet{bernard_plants_2003}, \citet{atkeson_pricing--market_2008},  \citet{loeckerMarkupsFirmLevelExport2012}, and \citet{edmondHowCostlyAre2019}) and \citet{guptaMarkupsMisallocationIndiaPdf2021} using Indian firms assume or support this positive correlation, our data give no direct empirical evidence for it. In fact, we find a negative correlation between markups and sales. One explanation is that this positive correlation is more likely to occur in a market-based economy such as the American economy while the Chinese economy contains many regulations and distortions, such as entry barriers, a lack of market-based allocation of financial credit, and a significant role for State-Owned Enterprises (SOEs). Removing SOEs attenuates the negative correlation, which hints at the possibility of finding a positive correlation if we can create a sample of Chinese firms whose environment is more market based. Another explanation is that the positive correlation between markups and market shares under nested CES demand exists among oligopolies (\citet{atkeson_pricing--market_2008}). However, $80\%$ of the industries in our data contain more than 50 firms and the top decile contains more than 1,000 firms. Furthermore, our data do not support the positive correlation even for industries with less than 25 firms and after dropping all SOEs. Finally, the missing positive correlation may result from distortions in capital and labor market which distort observed sizes or market shares. If high-markup firms tend to have larger distortions while low-markup firms tend to have smaller or even negative distortions, we would not be able to observe a positive correlation even if in a distortion-free economy exists. Therefore, it is unclear whether Chinese firms follow this pattern. Given this, we argue that it is better not to impose any correlation ex ante and to use a framework that accommodates arbitrary correlations. This motivates our decision on not to use demand structures that offer endogenous markups, such as nested CES with oligopolies (\citet{atkeson_pricing--market_2008}, \citet{edmondCompetitionMarkupsGains2015}, and \citet{NBERw27958}), Kimball preferences (\citet{klenowRealRigiditiesNominal2016}), translog preferences (\citet{feenstra_globalization_2017}), the CREMR demand (\citet{mrazovaSalesMarkupDispersion2021}), and hyperbolic absolute risk aversion preference (\citet{NBERw24199}).
+
+%The cost of not imposing any correlation in our framework is that we can not measure the deadweight loss caused by heterogeneous markups because the market outcome always aligns with that of the social planner. The welfare implication on the labor income share comes merely from reallocating resources among firms with different markups and different firm-level labor shares. There are several recent studies that measure the deadweight loss caused by heterogeneous markups, including the theoretical foundations provided by \citet{dhingraMonopolisticCompetitionOptimum2019} and \citet{mrazovaSalesMarkupDispersion2021}, empirical studies by \citet{liang_misallocations_2021} and \citet{guptaMarkupsMisallocationIndiaPdf2021} in the context of Indian firms, and the impact of trade on the deadweight loss by \citet{edmondCompetitionMarkupsGains2015}, \citet{feenstra_globalization_2017}, and \citet{NBERw27139}. To the best of our knowledge, all the existing structural models that capture the deadweight loss require imposing a given correlation between firm sizes and markups ex ante.\footnote{\citet{NBERw27139} uses a generalized Kimball preference but still requires that markups increase as a firm grows.} % We leave it to our future project to study whether it is appropriate to impose those alternative preferences and then study the deadweight loss due to heterogeneous markups. 
+
+% Our nested CES demand structure is very similar to the one in \citet{atkeson_pricing--market_2008} in that we both impose unit demand elasticities across industries and larger than 1 demand elasticities within industries. We do not follow \citet{atkeson_pricing--market_2008} to assume that a small number of firms compete in an industry, which leads to markups increasing with market shares under nested CES demand, because $80\%$ of the industries in our data contain more than 50 firms and the top 10 percentile contains more than 1000 firms. Furthermore, our data do not support the positive correlation even for industries with less than 25 firms and after dropping all the SOEs. Unlike \citet{atkeson_pricing--market_2008}, we have one more layer of nests. Variation of markups due to demand elasticities in our model result from the baby nests within an industry. Since our assignment of an industry's firms to baby sets is data driven, larger firms do not by assumption always belong to lower-demand-elasticity nests.
+
+%In spite of this, our framework offers a way of applying the nested CES framework when firm-level markups vary. One motivation of the other demand framework mentioned above is that applying CES means constant demand elasticities and markups. The other framework allows varying markups and can, therefore, fit the data more closely (\citet{mrazovaSalesMarkupDispersion2021}). Our framework shows that one can benefit from the tractability and simplicity of the CES demand while still allow the large variation of markups.
+
+
+
+%Our paper can be seen as a generalization of HK. In fact, our method can be applied to situations where the assumptions required by the original HK method are violated, i.e. heterogeneous markups and sloped marginal cost curves. Replacing our estimated production elasticities and demand elasticities by those assumed in HK reproduces its result and its requirement of equalizing TFPR under no distortion. 
+
+%\citet{NBERw24199} argues that variation in TFPR can reflect demand shifters instead of misallocation and, when shifting along a sloped marginal cost curve, efficiency rather than distortions. Furthermore, if demand elasticities differ across firms, distortions measured by HK are a mixture of distortions and markups. We find large dispersion in observed revenue-cost ratios. If this large dispersion is driven by differences in markups, the distortions measured by HK contain variations in markups. We also find returns to scale vary across industries which suggests some variation in TFPR should reflect efficiency. We deal with these biases by directly modeling demand as having heterogeneous demand elasticities and production functions as non-constant returns to scale. This disentangles the part of variation in marginal revenues due to markups from the part due to distortions. Unlike HK, TFPR is not equalized when distortions are removed and the TFPR variation in our no-distortion equilibrium indeed reflects changes in marginal cost and markups. Both \citet{NBERw24199} and our paper deal with the implication of HK's assumptions and their impact on predicted TFP gains. However, we adopt a completely different approach in relaxing the assumptions. \citet{NBERw24199} uses the hyperbolic absolute risk aversion utility function to relax the constant-markup assumption. This means they also imposes a positive correlation between market shares and markups. Besides, our method can be used when price and quantity data are not available while \citet{NBERw24199} requires those data.
+
+%Our paper complements recent studies on exploring sources of TFPR variation other than distortions. Our method takes into account the impact of varying returns to scale and demand elasticities on TFPR variation and disentangles the part of variation due to distortions from the part due to varying returns to scale and varying markups. \citet{NBERw26711} focuses on the part of TFPR variation caused by measurement errors and proposes a way to correct additive measurement errors in revenue and input. \citet{davidSourcesCapitalMisallocation2019} points out adjustment costs and information frictions can also cause dispersion in the ratio of value-added and capital and proposes a framework to disentangle different sources. Due to the link between TFPR and the ratio of value-added and capital, it is possible that adjustment costs and information frictions also contribute to TFPR variation.
+
+%Our paper complements recent studies on exploring sources of TFPR variation other than distortions. Our method takes into account the impact of varying returns to scale and demand elasticities on TFPR variation and identify the part of variation due to distortions. \citet{NBERw26711} proposes a way to correct additive measurement errors in revenue and input when measuring distortions because these measurement errors contribute to the variation of TFPR and can be falsely counted as distortions. \citet{davidSourcesCapitalMisallocation2019} points out adjustment costs and information frictions can also cause dispersion in the ratio of value-added and capital and proposes a framework to disentangle different sources.
+
+We adopt estimates of production elasticities from ZX instead of estimates or methods of other related studies because allowing firm-specific input distortions implies that firms with higher productivity may face higher distortions, as it is most likely the case in China where domestic private firms are understood to be more productive but underuse inputs due to, for example, financial constraints (\citet{songGrowingChina2011}). Therefore, we cannot use the method of estimating production functions developed by \citet{olleyDynamicsProductivityTelecommunications1996}, \citet{levinsohnEstimatingProductionFunctions2003}, and \citet{ackerberg_identification_2015}, where the monotonicity between unobserved firm productivity and some production inputs is required. We prefer ZX to \citet{ruzicReturnsScaleProductivity2021} because we want to allow for heterogeneous demand elasticities within industries and the possibilities that most or all the firms inside an industry experience positive input distortions, or similarly negative input distortions. When an industry, such as the industry of electrical vehicles, is deemed as strategic by the Chinese government, most or even all the firms in the industry may receive favorable financial credits and therefore the average capital distortions in this industry will be negative. \citet{ruzicReturnsScaleProductivity2021} requires demand elasticities to be constant inside industries and assumes input distortions to be mean zero. 
+
+% Similar to our paper, \citet{ruzicReturnsScaleProductivity2021} estimates parameters of heterogeneous demand elasticities and production elasticities using micro data. However, its method requires constant demand elasticities and markups within industries so that the variation of demand elasticities within industries can still contaminate its measures of distortions. It also requires that distortions have zero mean while we do not impose this restriction. Its model does not allow for firms to have negative profits but there are $15\%$ of firms in our data experiencing negative profits. Dropping all these firms may leave out useful information. Our model can use this information because it allows negative profits. Lastly, its method can only talk about predicted TFP gains within industries because it calculates relative distortions whereas our method can calculate both within and cross industries TFP gains.
+
+%Recent studies on TFP gains stress the impact of measurement errors in the form of gaps between average production and marginal production for models that assume constant returns to scale, e.g. \citet{NBERw26711}, and adjustment costs in a dynamic setting, e.g. \citet{davidSourcesCapitalMisallocation2019}. \citet{NBERw26711}'s concern is solved by modelling production as non-constant returns to scale. We study how to introduce heterogeneous demand elasticities and non-constant returns to scale to HK's framework and therefore focus on a static model. Moreover, independent and identically distributed measurement errors in observed firm-level total cost are accounted for by our idiosyncratic cost shocks.
+
+%\citet{liang_misallocations_2021} and \citet{guptaMarkupsMisallocationIndiaPdf2021} relate to our work on introducing variable markups to misallocation studies. They both use Indian data to show that predicted TFP gains are lower when heterogeneous markups are allowed, which coincides with our results using Chinese data. However, \citet{liang_misallocations_2021} needs to calibrates Indian firms’ production elasticities using American firms and assume ex-ante an average demand elasticity. Our research suggests these assumptions may limit the robustness of its results. \citet{guptaMarkupsMisallocationIndiaPdf2021} uses a very special data set where physical production is observed, while we only observe nominal production. It studies the deadweight loss caused by markups, whereas we focus on the impact of variable markups on labor income shares and shut down the deadweight-loss channel by using a CES demand.
+
+%(Keep this commented paragraph as materials that may be useful in the future) \citet{liang_misallocations_2021} is closely related to us as it also introduces heterogeneous markups to the framework of HK. It studies TFP gains in India while we work on China. \citet{liang_misallocations_2021} needs to impose parametric relation between markups and productivity using the Klenow-Willis specification of the Kimball aggregator while we allow any arbitrary relation. More importantly, it still needs the assumption of constant returns to scale, calibrates Indian firms' production elasticities using American firms, requires an assumed value for average demand elasticities, and are sensitive to changes in the assumed average demand elasticities. Our research suggests these assumptions may cause concerns over the robustness of its results.
+
+
+%Our paper also contributes to the discussion whether constant returns to scale is consistent with firms' empirical production decisions. While many studies assume constant returns to scale, a growing literature finds empirical evidence against it, and large variation in industry-level returns to scale have been documented (\citet{chirinkoEconomicFluctuationsMarket1994}, \citet{basuReturnsScaleProduction1997}, \citet{gaoReturnsScaleProductivity2016}, \citet{lafortuneChangingReturnsScale2021}). We find that Chinese firms in 2005 are on average constant returns to scale but there is large variation across industries. %Our structural analysis confirms returns to scale vary significantly across industries. To check the robustness of our structural estimation of returns to scale, we implement a reduced form analysis using \citet{kletteInconsistencyCommonScale1996a} which relies on different modelling assumptions. Both our structural and reduced-form analyses demonstrate on average decreasing returns to scale. This may result from under-reported labor expenditures (non-wage labor expenditure is not included) and variation of the ratio between wage and non-wage labor expenditure across firms (without such variation, our reduced-form analysis should be able to correct it). It can also be caused by other unobserved production factors such as intangible assets. The fact that we use microdata can be another reason as \citet{basuReturnsScaleProduction1997} points out returns to scale is sensitive to aggregation levels. Earlier research on returns to scale mainly uses data aggregated at the level of broadly defined industries. In fact, \citet{lafortuneChangingReturnsScale2021} also finds decreasing returns to scale using an industry-city panel data in the US. 
+
+%Finally, our paper is related to recent studies on the welfare implications of markups. This literature covers a variety of topics, such as the trend of rising aggregate markups (\citet{basuArePriceCostMarkups2019}, \citet{autorFallLaborShare2020}, and \citet{deloeckerRiseMarketPower2020}), the interaction between trade and markups (\citet{edmondCompetitionMarkupsGains2015} and \citet{feenstra_globalization_2017}), endogenous markups in the context of creative destruction (\citet{petersHeterogeneousMarkupsGrowth2020}), and channels of welfare loss (\citet{edmondHowCostlyAre2019}). Although we do not explicitly measure welfare changes, our paper improves the understanding of the welfare impact of heterogeneous markups and misallocation on labor. A lower increase in the labor income share under heterogeneous markups suggests a smaller gain for workers.
+
+The remainder of the paper is organized as follows. We introduce the data set in Section 3.2 and offers a brief explanation of the model and identification used by ZX in Section 3.3. We also talk about the theoretical consequences of using incorrect production elasticities and incorrect demand elasticities in Section 3.3. Section 3.4 presents the results and Section 3.5 concludes. Appendix~B provides derivations of the results in Section 3.3 and compare the differences between HK's data and our data. % the derivation of theoretical results, details of estimation procedures, a complete list of TFP gains when relaxing assumptions in HK, and results from using Chinese data on 2001.
+
+\section{Data} \label{sec:data}
+Our data source is the Chinese Annual Survey Data of Industries in 2005 collected by the National Bureau of Statistics of China.\footnote{We acquire the data through Peking University.} This survey data has been used by previous studies including HK, \citet{songGrowingChina2011}, and \citet{davidSourcesCapitalMisallocation2019}, and ZX. It contains non-state firms with more than 5 million RMB (about $\$600,000$) in revenue and all the state-owned enterprises (SOEs). %For demonstration, our structural analysis uses the year 2005 but it should be easily applied to other years. We do the same structural analysis for the year 2001 in Appendix~\ref{ASec:2001}. 
+
+The dataset is the same as the one used in ZX and contains rich information on firm-level value-added, wage expenditure, net value of fixed assets, sales, and costs. We clean the data and construct the depreciated real capital in the same way as in ZX who follows \citet{brandtCreativeAccountingCreative2012}. The labor shares are corrected also in the same way as in ZX to account for the unobserved non-wage part. Table~\ref{Table:sumStatCleaned2005} displays the summary statistics of the data.%We follow \citet{brandtCreativeAccountingCreative2012} and clean the data by dropping observations with negative value added, negative debts, negative sales, etc. The depreciated real capital is constructed also following \citet{brandtCreativeAccountingCreative2012}.
+
+%We follow ZX to trim the $1\%$ tails of value added, labor and capital shares of value added, and revenue-cost ratios. The observed labor shares do not include the non-wage part and the aggregate labor share calculated by aggregating the firm level labor expenditures is too low compared to the one inferred by the Chinese Input-and-Output Table and national accounts. Furthermore, the sum of the aggregate labor expenditure, capital expenditure, profits, and expenditure collected via input distortions should be 1 but it is less than 1 in the data. So we follow ZX to assume the ratios of observed labor shares and unobserved labor shares are constant across firms and correct the observe labor shares so that sum is 1. Table~\ref{Table:sumStatCleaned2005} displays the summary statistics of the data.
+
+\input{Tables/sumStatCleaned2005.tex}
+%\resizebox{\columnwidth}{!}{}
+%One well-known limitation of this data is its labor expenditure does not include the non-wage part and the aggregate labor share of value added is too low compared to the one inferred by Chinese Input-and-Output Table and national accounts. HK is aware of this issue and scales up each firm's labor expenditure by the same proportion so that the aggregate labor share reaches $50\%$. We run our estimation using unscaled labor expenditure because the under-reporting seems more severe in large firms than small firms. In fact, very large firms are concentrated in the area with very low labor expenditure while smaller firms are more spread out. Figure~\ref{Fig:unscaleWageVAHeat} in Appendix~\ref{ASec:data} demonstrates this pattern with more details. This makes sense intuitively because larger firms are more capable of providing non-wage labor income. Although the aggregate labor expenditure share in this data is around $20\%$, the average of all the firms' labor expenditure share is $32\%$ after the data cleaning described above. Since firms of all sizes receive equal weights in our estimation, scaling up all the firms' labor expenditure by the same proportion overestimates labor expenditure, and our estimators reflect more the unweighted $32\%$ average rather than the weighted $20\%$ average. In other words, such uniform scale-up introduces new biases. 
+%
+%It is possible that using unscaled labor share underestimates production elasticities of labor and therefore underestimate returns to scale on average. We use a reduced form analysis to check our structural estimators. In fact, later sections show the reduced-form estimators by and large coincide with the structural estimators. We consider this as a favorable piece of evidence because the reduced form analysis is completely different from our structural model so that there is no guarantee the two results coincide. Moreover, scaling-up all the firms' labor shares by the same proportion does not change the reduced-form estimators. Although the ideal but infeasible practice is to find the non-wage part for each firm, the evidence leads us to believe using the observed wage expenditure is the best feasible option for estimating production elasticities and predicting TFP gains.
+
+\section{Model} \label{sec:ch3model}
+We use the model and identification method of ZX to estimate demand elasticities and production elasticities. In this section, we provide a brief explanation of the model setup and the identification method and refer readers to ZX for further details. We also demonstrate the predicted TFP gains and the reallocation of capital and labor across nests as well as the consequences of using incorrect production elasticities and demand elasticities. 
+
+\subsection{Setup}
+In this economy, there are $S$ industries, $s_1$, $s_2$, \ldots ,$s_S$. An industry is referred to as $s$ when its name is not specified. Firms, labeled as $i$, inside an industry have the same production elasticities $\alpha_{s}$ but differ in their Hicks-neutral productivity, $A_i$. Firm $i$ produces product $Y_i$ according to a Cobb-Douglas production function using capital $K_i$ and labor $L_i$: 
+$$Y_{i}=A_{i}K_{i}^{1-\alpha_{s}}L_{i}^{\alpha_{s}}$$
+
+Demand has nested constant elasticities of substitution (nested CES). A nest is a group of firms who share the same production technology apart from the firm-specific Hicks-Neutral productivity and share the same demand elasticity $\epsilon_g$. Each nest, denoted by $g$, has a nest-specific demand elasticity, $\epsilon_g$, which is larger than 1. The elasticity of substitution across nests is one. So $Y=\prod_{s \in \{s_1, \cdots, s_S \} }\prod_{g\in\{\bar{\mathtt{g}}(s), \underline{\mathtt{g}}(s)\}} Y_g^{\beta_g}$ and $
+Y_g=\left( \sum_{i \in \mathcal{G}(g)} Y_i^{\frac{\epsilon_g-1}{\epsilon_g}} \right)^{\frac{\epsilon_g}{\epsilon_g-1}}$.
+%\begin{align}
+%Y=&\prod_{s \in \{s_1, \cdots, s_S \} }\prod_{g\in\{\bar{\mathtt{g}}(s), \underline{\mathtt{g}}(s)\}} Y_g^{\beta_g} \label{Eq:Ytotal}\\
+%Y_g=&\left( \sum_{i \in \mathcal{G}(g)} Y_i^{\frac{\epsilon_g-1}{\epsilon_g}} \right)^{\frac{\epsilon_g}{\epsilon_g-1}} \label{Eq:Ygtotal}
+%\end{align}
+$Y$ represents the aggregate production of all the firms, and $Y_g$ is the production of nest $g$. An industry $s$ may have two nests, one high-demand-elasticity nest $\bar{\mathtt{g}}(s)$ and one low-demand-elasticity nest $\underline{\mathtt{g}}(s)$, reflecting the different scope of product differentiation among firms producing similar products. It is also possible that an industry has only one nest, then $\bar{\mathtt{g}}(s)=\underline{\mathtt{g}}(s)$. \label{par:ch3nestDef}
+
+Firm $i$'s profits $\Pi_i$ are revenues minus the production costs:
+$$\Pi_i=(1-\tau_i^Y )P_iY_i-(R(1+\tau_i^K )K_i+wL_i)e^{\delta_i}$$
+The input distortions $\tau_i^K$ enter the profits function as wedges multiplied with the market prices of capital. The output distortions changes the amount of revenues a firm receive, and they enter the profits function as a factor multiplied with $P_iY_i$. The production costs contain unexpected cost shocks $\delta_i$ that are realized after firms choose capital, labor, and prices. The cost shocks $\delta_i$ follow a nest-specific normal distribution $\mathcal{N}\left( -\frac{\sigma_g^2}{2},\sigma_g \right)$. This ensures that $\E[e^{\delta_i}]=1$ is normalized to 1.
+
+Firm $i$ chooses its capital and labor usage $K_i$ and $L_i$ and set its price $P_i$ to maximize the expected profits subject to the demand structure and the firm specific distortions $\tau_i^K$ and $\tau_i^Y$: \label{par:clarifyChoiceConstraints}
+\begin{align*}
+\max_{K_i,L_i,P_i} \E[\Pi_i]&=(1-\tau_i^Y )P_iY_i-(R(1+\tau_i^K)K_i+wL_i)\\
+\text{s.t. } &Y_i=A_iK_i^{\alpha_s}L_i^{1-\alpha_s}\\
+& \text{ the nested CES demand}
+\end{align*}
+
+The first order conditions of the profit maximization give the relation between factor shares and model primitives such as input distortions. From the first order conditions, we can see that firm-specific distortions, $\tau_i^Y$ and $\tau_i^K$, are the gaps between observed factor shares, $\frac{wL_i}{P_iY_i}$ and $\frac{RK_i}{P_iY_i}$, and the predicted factor shares under no input distortions, $\alpha_s\frac{\epsilon_g-1}{\epsilon_g}$ and $\alpha_s^K\frac{\epsilon_g-1}{\epsilon_g}$: 
+\begin{align}
+\log(1-\tau^Y_i)=&\log\left( \frac{wL_i}{P_iY_i} \right)+\log\left( \frac{\epsilon_g}{\epsilon_g-1} \right)-\log(\alpha_s) \label{Eq:FOCtauY}\\
+\log(1+\tau^K_i)=&\log\left( \frac{1-\alpha_s}{\alpha_s} \right)-\log\left( \frac{RK_i}{wL_i} \right) \label{Eq:FOCtauL}
+\end{align}
+The unobserved cost shocks are not in the observed capital shares and labor shares. Since the factor shares have to be positive, $\tau_i^K>-1$ and $\tau_i^Y<1$.
+
+
+\subsection{Reallocation and predicted TFP gains}
+The aggregate TFP gains can be decomposed into two parts: gains from reallocation within nests and gains from reallocation across nests.\footnote{HK only has the within-nest reallocation, because equalizing TFPR leads to no capital and labor flow across nests as explained by HK.}
+\begin{align}
+\text{TFP gains}=\frac{Y^*}{Y}=\prod_{s \in \{s_1, \cdots, s_S \} }\prod_{g\in\{\bar{\mathtt{g}}(s), \underline{\mathtt{g}}(s)\}} \underbrace{\left[ \frac{\text{TFP}_g^*}{\text{TFP}_g} \right]^{\beta_g}}_{\text{gains within nests}} \cdot \underbrace{ \left[ \left( \frac{L_g^*}{L_g} \right)^{\alpha_g}  \left( \frac{K_g^*}{K_g} \right)^{1-\alpha_g} \right]^{\beta_g}}_{\text{gains across nests}} \label{Eq:totalTFPgains}
+\end{align}
+$Y^*$ is the aggregate output when the input distortions are removed, i.e. $\tau_i^K=\tau_i^Y=0$. The same as in HK, nest $g$'s TFP, $\text{TFP}_g$, is defined as $\frac{Y_g}{K_g^{1-\alpha_g}L_g^{\alpha_g}}$, where $L_g$ and $K_g$ are labor and capital used in nest $g$. When input distortions are removed, nest $g$'s TFP is denoted by $\text{TFP}_g^*$. We denote the capital and labor used in $g$ without input distortions as $L^*_g$ and $K^*_g$. The supply of aggregate capital and labor, $K$ and $L$, is fixed. The wage and the capital rental rate clear the markets of capital and labor so that $\sum_{s \in \{s_1, \cdots, s_S \} }\sum_{g\in\{\bar{\mathtt{g}}(s), \underline{\mathtt{g}}(s)\} \sum_{i \in \mathcal{G}(g)}}K_i=\sum_{s \in \{s_1, \cdots, s_S \} }\sum_{g\in\{\bar{\mathtt{g}}(s), \underline{\mathtt{g}}(s)\} \sum_{i \in \mathcal{G}(g)}}K_i^*=K$ and $\sum_{s \in \{s_1, \cdots, s_S \} }\sum_{g\in\{\bar{\mathtt{g}}(s), \underline{\mathtt{g}}(s)\} \sum_{i \in \mathcal{G}(g)}}L_i=$\newline
+$\sum_{s \in \{s_1, \cdots, s_S \} }\sum_{g\in\{\bar{\mathtt{g}}(s), \underline{\mathtt{g}}(s)\} \sum_{i \in \mathcal{G}(g)}}L_i^*=L$.
+
+We follow HK to define the firm-level and nest-level revenue-based TFP, i.e. TFPR, as:
+\begin{align*}
+\text{TFPR}_{i} \equiv &  P_iA_i = \frac{P_{i}Y_{i}}{K_{i}^{1-\alpha_s}L_{i}^{\alpha_s}}\\
+\text{TFPR}_{g} \equiv & \frac{\sum_{i\in g}P_{i}Y_{i}}{K_{g}^{1-\alpha_s}L_{g}^{\alpha_s}}
+\end{align*}
+Then the nest-level TFP is:
+$$\text{TFP}_g=\left( \sum_{i \in g}\left( A_i \cdot \frac{\text{TFPR}_g}{\text{TFPR}_i} \right)^{\epsilon_g-1} \right)^{\frac{1}{\epsilon_g-1}}$$
+We follow HK and calculate $A_i$ using $\frac{( P_{i}Y_{i} )^{\epsilon_g/(\epsilon_g-1)}}{K_{i}^{1-\alpha_s}(wL_{i})^{\alpha_s}}$. %However, the ratio $\text{TFPR}_i/\text{TFPR}_g$ and consequently $\text{TFP}_g$ and $\text{TFP}_g^*$ are different from HK due to non-constant returns to scale.
+\begin{align*}
+\frac{\text{TFPR}_i}{\text{TFPR}_g}=& \frac{(1+\tau_i^K)^{1-\alpha_s}}{1-\tau_i^Y} \left( \sum_{i \in \mathcal{G}(g)}\frac{P_iY_i(1-\tau_i^Y)}{P_gY_g(1+\tau_i^K)} \right)^{1-\alpha_s}\left( \sum_{i \in \mathcal{G}(g)}\frac{P_iY_i(1-\tau_i^Y)}{P_gY_g} \right)^{\alpha_s} 
+\end{align*}
+
+In equilibrium, firms' market shares in nests are (derivations are in Appendix~\ref{ASec:TFPgainsMarketShares}):
+$$\frac{P_iY_i}{P_gY_g}=\frac{W_i}{\sum_{j\in g}W_j}$$
+where,
+$$W_i \equiv \left( \frac{1}{A_i}\right)^{1-\epsilon_g} \left( \frac{(1+\tau_i^K)^{1-\alpha_g}}{1-\tau_i^Y} \right)^{1-\epsilon_g}   $$ 
+Therefore, the the ratio $\text{TFPR}_i/\text{TFPR}_g$ is:
+\begin{align*}
+\frac{\text{TFPR}_i}{\text{TFPR}_g}=&\Gamma_i \cdot \left( \sum_{i\in\mathcal{G}(g)} \left( \frac{\Gamma_i}{A_i} \right)^{\theta_g}\right)^{-1}\cdot \left( \sum_{i\in\mathcal{G}(g)} \left( \frac{\Gamma_i}{A_i} \right)^{\theta_g}\frac{1-\tau_i^Y}{1+\tau_i^K}\right)^{1-\alpha_g} \cdot \left( \sum_{i\in\mathcal{G}(g)} \left( \frac{\Gamma_i}{A_i} \right)^{\theta_g}(1-\tau_i^Y)\right)^{\alpha_g}
+\end{align*}
+where
+\begin{align*}
+\Gamma_i\equiv & \frac{(1+\tau_i^K)^{1-\alpha_g}}{1-\tau_i^Y} \\
+\theta_g\equiv & 1-\epsilon_g
+\end{align*}
+$\Gamma_i$ is a compound measure of firm $i$'s cdistortions based on its technology $\alpha_g$. Then nest $g$'s $\text{TFP}_g$ is:
+\begin{align*}
+\text{TFP}_g=&\left( \sum_{i\in\mathcal{G}(g)}\left( \frac{\Gamma_i}{A_i} \right)^{\theta_g} \right)^{\frac{\epsilon_g}{\epsilon_g-1}} \cdot \left( \sum_{i\in\mathcal{G}(g)}\left( \frac{\Gamma_i}{A_i} \right)^{\theta_g} \frac{1-\tau_i^Y}{1+\tau_i^K}\right)^{-1+\alpha_g} \cdot \left( \sum_{i\in\mathcal{G}(g)}\left( \frac{\Gamma_i}{A_i} \right)^{\theta_g} (1-\tau_i^Y)\right)^{-\alpha_g} 
+\end{align*}
+The derivations of $\text{TFPR}_i/\text{TFPR}_g$, and $\text{TFP}_g$ are in Appendix~\ref{ASec:TFPgainsMarketShares}.
+
+We denote all the variables under the scenario of no input distortions, i.e. $\tau_i^K=0$ and $\tau_i^Y=0$, with a superscript $*$. The no-input-distortion equilibrium market share of firm $i$ is:
+\begin{align*}
+\frac{P_i^*Y_i^*}{P_g^*Y_g^*} &= \frac{ A_i ^{-\theta_g}}{\sum_{i \in \mathcal{G}(g)} A_i ^{-\theta_g}}
+%&= \frac{A_i^{\frac{\epsilon_g-1}{\epsilon_g+(1-\epsilon_g)(\alpha_s+1-\alpha_s)}}}{\sum_{i \in \mathcal{G}(g)}A_i^{\frac{\epsilon_g-1}{\epsilon_g+(1-\epsilon_g)(\alpha_s+1-\alpha_s)}}}
+\end{align*}
+and nest $g$'s TFP under no input distortions is:
+$$\text{TFP}_g^*= \left(\sum_{i \in \mathcal{G}(g)} A_i^{-\theta_g} \right)^{-\frac{1}{\theta_g}}$$
+%$$\text{TFP}_g^*=\left( \sum_{i \in g}\left( A_i \cdot \left( \frac{\sum_{i \in g}A_i^{\frac{\epsilon_g-1}{\epsilon_g+(1-\epsilon_g)(\alpha_L+\alpha_K)}}}{A_i^{\frac{\epsilon_g-1}{\epsilon_g+(1-\epsilon_g)(\alpha_L+\alpha_K)}}} \right)^{1-\alpha_K-\alpha_L} \right)^{\epsilon_g-1} \right)^{\frac{1}{\epsilon_g-1}}$$
+%where
+%$$\frac{P_i^*Y_i^*}{P_g^*Y_g^*} = \frac{A_i^{\frac{\epsilon_g-1}{\epsilon_g+(1-\epsilon_g)(\alpha_s+1-\alpha_s)}}}{\sum_{i \in \mathcal{G}(g)}A_i^{\frac{\epsilon_g-1}{\epsilon_g+(1-\epsilon_g)(\alpha_s+1-\alpha_s)}}}$$
+%Larger firms' $A_i$ in the formula of TFP$_g^*$ receive higher weights in nest-level TFP if they are increasing returns to scale but receive lower weights if they are decreasing returns to scale. 
+
+%Different from HK, TFPR$_i$ under no distortions is not equalized within a nest unless $1-\alpha_s+\alpha_s=1$:
+%\begin{align*}
+%\frac{\text{TFPR}_i^*}{\text{TFPR}_g^*}=&\left( \frac{P_i^*Y_i^*}{P_g^*Y_g^*} \right)^{1-1-\alpha_s-\alpha_s}=\left( \frac{A_i^{-\theta_g}}{\sum_{i \in \mathcal{G}(g)}A_i^{-\theta_g}} \right)^{1-1-\alpha_s-\alpha_s}
+%\end{align*}
+If $\tau_i^K=\tau_i^Y=0$, $\frac{\text{TFPR}_i^*}{\text{TFPR}_g^*}=1$, so TFPR$_i^*$ is equalized within $g$. %The variation in TFPR$_i^*$ in this case no longer indicates input distortions as in HK but reflects differences in firms' productivity, as argued by \citet{NBERw24199}.% Demand elasticities $\epsilon_g$, firm-level productivity $A_i$, and returns to scale $\alpha^L_s+\alpha^K_s$ affect the no-distortion TFPR ratio, which links the TFPR ratio to variation of markups and the marginal cost:
+
+
+The predicted TFP gains in nest $g$, i.e. changes in nest $g$'s TFP$_g$ when removing the distortions in it, are the reciprocal of $\frac{\text{TFP}_g}{\text{TFP}_g^*}$:
+\begin{align}
+\frac{\text{TFP}_g}{\text{TFP}_g^*}=& \left( \frac{\sum_{i\in\mathcal{G}(g)}\left( \frac{\Gamma_i}{A_i} \right)^{\theta_g}}{\sum_{i \in \mathcal{G}(g)} A_i^{-\theta_g}} \right)^{\frac{\epsilon_g}{\epsilon_g-1}} \label{Eq:TFPgainsG}\\
+& \cdot \left( \frac{\sum_{i\in\mathcal{G}(g)}\left( \frac{\Gamma_i}{A_i} \right)^{\theta_g} \frac{1-\tau_i^Y}{1+\tau_i^K}}{\sum_{i \in \mathcal{G}(g)} A_i^{-\theta_g}} \right)^{-1+\alpha_g} \cdot \left( \frac{\sum_{i\in\mathcal{G}(g)}\left( \frac{\Gamma_i}{A_i} \right)^{\theta_g} (1-\tau_i^Y)}{\sum_{i \in \mathcal{G}(g)} A_i^{-\theta_g}}\right)^{-\alpha_g} \nonumber
+\end{align}
+
+The gains across nests are calculated using the ratios between nest-level labor and capital usage before and after the reallocation, as shown in Equation~\eqref{Eq:totalTFPgains}. The ratios can be written as:
+\begin{align*}
+\frac{L_g^*}{L_g}=&\frac{w^*L_g^*/(w^*L)}{wL_g/(wL)}\\
+\frac{K_g^*}{K_g}=&\frac{K_g^*/K}{K_g/K}
+\end{align*}
+Since $wL_g/(wL)$ and $K_g/K$ are directly observed, we only need to calculate $w^*L_g^*/(w^*L)$ and $K_g^*/K$:
+\begin{align*}
+\frac{w^*L_g^*}{w^*L}=&\frac{\beta_g\cdot\frac{\alpha_g}{\epsilon_g/(\epsilon_g-1)\mathbb{E}[e^{\delta_i}]} }{\sum_g \beta_g\cdot\frac{\alpha_g}{\epsilon_g/(\epsilon_g-1)\mathbb{E}[e^{\delta_i}]} }\\
+\frac{K_g^*}{K}=&\frac{\beta_g\cdot\frac{1-\alpha_g}{\epsilon_g/(\epsilon_g-1)\mathbb{E}[e^{\delta_i}]} }{\sum_g \beta_g\cdot\frac{1-\alpha_g}{\epsilon_g/(\epsilon_g-1)\mathbb{E}[e^{\delta_i}]} }
+\end{align*}
+  
+Using the formulas above, aggregate TFP gains can be calculated once the parameters, $\alpha_g$, $\epsilon_g$, and $\beta_g$, are identified. $\beta_g$ is simply the expenditure share of nest $g$. %The estimation of the remaining parameters will be discussed in Section~\ref{sec:Identification}. %The identification strategy used is discussed in the next section.
+
+\subsection{Consequences of calibrating $\alpha_g$ using a benchmark economy} \label{Sec:ConsequenceAlpha}
+This section explains why calibrating Chinese $\alpha_g$ using a benchmark economy does not affect the predicted TFP gains through the estimated values of input distortions but does affect the predicted gains through the aggregation and through the estimated firm productivity $A_i$. Denote the production elasticities of the benchmark economy as $\tilde{\alpha}_g$ and define the difference between the production elasticities of the benchmark economy and those of China as:
+\begin{align*}
+\delta_g^{\alpha} \equiv & \frac{\tilde{\alpha}_g}{\alpha_g}
+\end{align*}
+$\delta^{\alpha}$ can also be interpreted as measurement errors of the production elasticities. The distortions estimated using the calibrated $\tilde{\alpha}_g$ are denoted as $\tilde{\tau}_i^K$ and $\tilde{\tau}_i^Y$:
+\begin{align*}
+\log(1-\tilde{\tau}_i^Y)=&\log(1-\tau_i^Y) -\log(\delta_g^{\alpha}) \\
+\log(1+\tilde{\tau}_i^K)=&\log(1+\tau_i^K) +\left( \frac{1-\delta_g^{\alpha}\alpha_g}{(1-\alpha_g)\delta_g^{\alpha}} \right)
+\end{align*}
+$\tau_i^K$ and $\tau_i^Y$ are the distortions estimated using estimated $\alpha_g$. 
+
+Using $\tilde{\alpha}_g$, firms' productivity $\tilde{A}_i$ is measures as:
+$$\tilde{A}_i=\frac{( P_{i}Y_{i} )^{\epsilon_g/(\epsilon_g-1)}}{K_{i}^{1-\tilde{\alpha}_g}(wL_{i})^{\tilde{\alpha}_g}}$$ 
+
+Nest $g$'s TFP using $\tilde{\alpha}_g$ is:
+\begin{align*}
+\widetilde{\text{TFP}}_g=&\left( \sum_{i\in\mathcal{G}(g)}\left( \frac{\tilde{\Gamma}_i}{\tilde{A}_i} \right)^{\theta_g} \right)^{\frac{\epsilon_g}{\epsilon_g-1}} \cdot \\
+&\left( \sum_{i\in\mathcal{G}(g)}\left( \frac{\tilde{\Gamma}_i}{\tilde{A}_i} \right)^{\theta_g} \frac{1-\tau_i^Y}{(1+\tau_i^K)}\frac{1-\alpha_g}{1-\alpha_g\delta_g^{\alpha}}\right)^{-1+\tilde{\alpha}_g} \cdot \left( \sum_{i\in\mathcal{G}(g)}\left( \frac{\tilde{\Gamma}_i}{\tilde{A}_i} \right)^{\theta_g} \frac{1-\tau_i^Y}{\delta_g^{\alpha}}\right)^{-\tilde{\alpha}_g} 
+\end{align*}
+where $\tilde{\Gamma}_i=\frac{(1+\tilde{\tau}_i^K)^{1-\tilde{\alpha}_g}}{1-\tilde{\tau}_i^Y}=\frac{(1+\tau_i^K)^{1-\tilde{\alpha}_g}}{1-\tau_i^Y}\cdot \left( \frac{1-\delta_g^{\alpha}}{(1-\alpha_g)\delta_g^{\alpha}} \right)^{1-\tilde{\alpha}_g}/\delta_g^{\alpha_g}$. It turns out that $\delta_g^{\alpha}$ cancels out in $\widetilde{\text{TFP}}_g$:
+\begin{align*}
+\widetilde{\text{TFP}}_g=&\left( \sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\tilde{\alpha}_g}}{\tilde{A}_i(1-\tau_i^Y)} \right)^{\tilde{\theta}_g} \right)^{\frac{\epsilon_g}{\epsilon_g-1}} \\
+& \cdot \left( \sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\tilde{\alpha}_g}}{\tilde{A}_i(1-\tau_i^Y)} \right)^{\tilde{\theta}_g} \frac{1-\tau_i^Y}{(1+\tau_i^K)}\right)^{-1+\tilde{\alpha}_g}\\
+& \cdot \left( \sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\tilde{\alpha}_g}}{\tilde{A}_i(1-\tau_i^Y)} \right)^{\tilde{\theta}_g} (1-\tau_i^Y)\right)^{-\tilde{\alpha}_g} 
+\end{align*}
+When there is no distortion:
+$$\widetilde{\text{TFP}}_g^*= \sum_{i \in \mathcal{G}(g)}\left( \tilde{A}_i^{-\tilde{\theta}_g} \right)^{-\frac{1}{\tilde{\theta}_g}}$$
+
+Predicted TFP gains of nest $g$ are the inverse of:
+\begin{align}
+\frac{\widetilde{\text{TFP}}_g}{\widetilde{\text{TFP}}_g^*}=&\frac{1}{\left(\sum_{i \in \mathcal{G}(g)} \tilde{A}_i^{-\tilde{\theta}_g} \right)^{-\frac{1}{\tilde{\theta}_g}}}
+\cdot \left( \sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\tilde{\alpha}_g}}{\tilde{A}_i(1-\tau_i^Y)} \right)^{\tilde{\theta}_g} \right)^{\frac{\epsilon_g}{\epsilon_g-1}} \nonumber\\
+& \cdot \left( \sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\tilde{\alpha}_g}}{\tilde{A}_i(1-\tau_i^Y)} \right)^{\tilde{\theta}_g} \frac{1-\tau_i^Y}{(1+\tau_i^K)}\right)^{\tilde{\alpha}_g-1} \nonumber\\
+& \cdot \left( \sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\tilde{\alpha}_g}}{\tilde{A}_i(1-\tau_i^Y)} \right)^{\tilde{\theta}_g} (1+\tau_i^Y)\right)^{-\tilde{\alpha}_g} \nonumber\\
+=& \left( \frac{\sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\tilde{\alpha}_g}}{\tilde{A}_i(1-\tau_i^Y)} \right)^{\tilde{\theta}_g}}{\sum_{i \in \mathcal{G}(g)} \tilde{A}_i^{-\tilde{\theta}_g}} \right)^{\frac{\epsilon_g}{\epsilon_g-1}} \label{Eq:TFPgainsGUS}\\
+& \cdot \left( \frac{\sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\tilde{\alpha}_g}}{\tilde{A}_i(1-\tau_i^Y)} \right)^{\tilde{\theta}_g} \frac{1-\tau_i^Y}{(1+\tau_i^K)}}{\sum_{i \in \mathcal{G}(g)} \tilde{A}_i^{-\tilde{\theta}_g}}\right)^{\tilde{\alpha}_g-1} \nonumber \cdot \left(\frac{ \sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\tilde{\alpha}_g}}{\tilde{A}_i(1-\tau_i^Y)} \right)^{\tilde{\theta}_g} (1-\tau_i^Y)}{\sum_{i \in \mathcal{G}(g)} \tilde{A}_i^{-\tilde{\theta}_g}}\right)^{-\tilde{\alpha}_g} \nonumber
+\end{align}
+The second equation is simply rearranging $\frac{1}{\left(\sum_{i \in \mathcal{G}(g)} \tilde{A}_i^{-\tilde{\theta}_g} \right)^{-\frac{1}{\tilde{\theta}_g}}}$. 
+
+The predicted TFP gains of nest $g$ using estimated $\alpha_g$ are given in Equation~\eqref{Eq:TFPgainsG}. To make the comparison with Equation~\eqref{Eq:TFPgainsGUS} easier, we rewrite Equation~\eqref{Eq:TFPgainsG} by plugging in the formula of $\Gamma_i$:
+\begin{align}
+\frac{\text{TFP}_g}{\text{TFP}_g^*}=& \left( \frac{\sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\alpha_g^K}}{A_i(1-\tau_i^Y)} \right)^{\theta_g}}{\sum_{i \in \mathcal{G}(g)} A_i^{-\theta_g}} \right)^{\frac{\epsilon_g}{\epsilon_g-1}} \label{Eq:TFPgainsG2}\\
+& \cdot \left( \frac{\sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\alpha_g}}{A_i(1-\tau_i^Y)} \right)^{\theta_g} \frac{1-\tau_i^Y}{1+\tau_i^K}}{\sum_{i \in \mathcal{G}(g)} A_i^{-\theta_g}} \right)^{\alpha_g-1} \cdot \left( \frac{\sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\alpha_g}}{A_i(1-\tau_i^Y)} \right)^{\theta_g} (1+\tau_i^Y)}{\sum_{i \in \mathcal{G}(g)} A_i^{-\theta_g}}\right)^{-\alpha_g} \nonumber
+\end{align}
+
+Comparing Equation~\eqref{Eq:TFPgainsGUS} and \eqref{Eq:TFPgainsG2}, we can see that the biases of the predicted TFP gains caused by calibrating the production elasticities are not due to the biases in the estimated input distortions but how the input distortions are aggregated within firms, i.e. the $\tilde{\alpha}_g$ in $\frac{(1+\tau_i^K)^{1-\alpha_g}}{(1-\tau_i^Y)}$, and across firms, i.e. the $\tilde{\alpha}_g$ in the indexes of the second line of Equation~\eqref{Eq:TFPgainsGUS}.
+
+\subsection{Consequences of using homogeneous demand elasticities}
+In this section, we talk about the consequence of using the correct production elasticities but incorrect homogeneous demand elasticities. We denote $\epsilon_g$ as the true demand elasticities and $\tilde{\epsilon}$ as the homogeneous demand elasticity assumed by researchers. We define $\delta_g^{\epsilon}$as:
+\begin{align*}
+\ln(\delta_g^{\epsilon})=&\ln\left( \frac{\tilde{\epsilon}}{\tilde{\epsilon}-1} \right)-\ln\left( \frac{\epsilon_g}{\epsilon_g-1} \right)
+\end{align*}
+Then the distortions, $\tilde{\tau}_i^{\epsilon,L}$ and $\tilde{\tau}_i^{\epsilon,Y}$, estimated using $\tilde{\epsilon}$ are:
+\begin{align*}
+\ln(1+\tilde{\tau}_i^{\epsilon,Y})=&\ln(1+\tau_i^Y)+\ln(\delta_g^{\epsilon})\\
+\ln(1+\tilde{\tau}_i^{\epsilon,K})=&\ln(1+\tau_i^K)
+\end{align*}
+where $\tau_i^Y$ and $\tau_i^K$ are the distortions estimated using $\epsilon_g$.
+
+Following the same procedure as in Section~\ref{Sec:ConsequenceAlpha}, we can get the TFP$_g$ of nest $g$ using $\tilde{\epsilon}$, which is denoted as $\widetilde{\text{TFP}}_g^{\epsilon}$:
+\begin{align*}
+\widetilde{\text{TFP}}_g^{\epsilon}=&\left( \sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\alpha_g}}{\tilde{A}^{\epsilon}_i(1-\tau_i^Y)} \right)^{\theta} \right)^{\frac{\tilde{\epsilon}}{\tilde{\epsilon}-1}} \\
+& \cdot \left( \sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\alpha_g}}{\tilde{A}^{\epsilon}_i(1-\tau_i^Y)} \right)^{\theta} \frac{1-\tau_i^Y}{(1+\tau_i^K)}\right)^{\alpha_g-1}\\
+& \cdot \left( \sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\alpha_g}}{\tilde{A}^{\epsilon}_i(1-\tau_i^Y)} \right)^{\theta} (1-\tau_i^Y)\right)^{-\alpha_g} 
+\end{align*}
+where $\tilde{A}^{\epsilon}_i=\frac{( P_{i}Y_{i} )^{\tilde{\epsilon}/(\tilde{\epsilon}-1)}}{K_{i}^{1-\alpha_g}(wL_{i})^{\alpha_g}}$.
+
+When there is no distortion, the TFP of nest $g$ is denoted as $\widetilde{\text{TFP}}_g^{\epsilon*}$:
+$$\widetilde{\text{TFP}}_g^{\epsilon*}= \sum_{i \in \mathcal{G}(g)}\left( (\tilde{A}_i^{\epsilon})^{-\theta} \right)^{-\frac{1}{\theta}}$$
+
+Then the TFP gains of nest $g$ is:
+\begin{align}
+\frac{\widetilde{\text{TFP}}_g^{\epsilon}}{\widetilde{\text{TFP}}_g^{\epsilon*}}=& \left( \frac{\sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\alpha_g}}{\tilde{A}^{\epsilon}_i(1-\tau_i^Y)} \right)^{\theta}}{\sum_{i \in \mathcal{G}(g)} (\tilde{A}^{\epsilon}_i)^{-\theta}} \right)^{\frac{\tilde{\epsilon}}{\tilde{\epsilon}-1}} \label{Eq:TFPgainsGhomoepsilon}\\
+& \cdot \left( \frac{\sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\alpha_g}}{\tilde{A}^{\epsilon}_i(1-\tau_i^Y)} \right)^{\theta} \frac{1-\tau_i^Y}{1+\tau_i^K}}{\sum_{i \in \mathcal{G}(g)} (\tilde{A}^{\epsilon}_i)^{-\theta}} \right)^{\alpha_g-1} \cdot \left( \frac{\sum_{i\in\mathcal{G}(g)}\left( \frac{(1+\tau_i^K)^{1-\alpha_g}}{\tilde{A}^{\epsilon}_i(1-\tau_i^Y)} \right)^{\theta} (1-\tau_i^Y)}{\sum_{i \in \mathcal{G}(g)} (\tilde{A}^{\epsilon}_i)^{-\theta}}\right)^{-\alpha_g} \nonumber
+\end{align}
+
+
+Comparing  Equation~\eqref{Eq:TFPgainsG2} and \eqref{Eq:TFPgainsGhomoepsilon} , we can see that the biases of the predicted TFP gains caused by assuming homogeneous demand elasticities are not due to the biases in the estimated input distortions but how the input distortions are aggregated across firms, i.e. the $\tilde{\theta}^{\epsilon}_g$ and $\tilde{\epsilon}$, and through the estimated $\tilde{A}^{\epsilon}_i$.
+
+%\subsection{Identification} \label{sec:Identification}
+%The data required for estimation is industry classification, firm-level value added, labor expenditures, the depreciated net value of real capital, total costs, and sales. The key assumptions are that cost shocks in a nest are normally distributed, that the modes of capital and labor distortions in an industry are both 0, and that the first layer of nests is industries and the second layer is the nests inside industries. We follow HK and set capital rental rate $R$ to 0.1. 
+%
+%The nest structure and nest specific demand elasticities are estimated using firm-level revenue cost ratios and firms' industry classification. According to our model, the distribution of firms' markups in an industry with two latent nests is:
+%\begin{equation}
+%\ln(\mu_{i})\sim (1-w_s)\mathcal{N}\left( \ln \frac{\epsilon_{\underline{g}(s)}}{\epsilon_{\underline{g}(s)}-1},\sigma_{\underline{g}(s)}^2 \right)+w_s\mathcal{N}\left( \ln \frac{\epsilon_{\bar{g}(s)}}{\epsilon_{\bar{g}(s)}-1},\sigma_{\bar{g}(s)}^2 \right) \text{ for } i\in \mathcal{S}(s)  \label{Eq:markupsDistr2}
+%\end{equation}
+%where $w_s$ is the probability that a firm with unknown latent identity from industry $s$ belongs to nest $\bar{g}(s)$. $\mathcal{S}(s)$ is the set of all the firms that belong to industry $s$. When there is only one nest, the distribution is:
+%\begin{equation}
+%\ln(\mu_{i})\sim \mathcal{N}\left( \ln \frac{\epsilon_g}{\epsilon_g-1}-\frac{\sigma_g^2}{2},\sigma_g^2 \right)  \text{ for } i\in \mathcal{S}(s)\label{Eq:markupsDistr1}
+%\end{equation}
+%
+%We follow ZX to use revenue-cost ratios as measurement of firms' markups because firms returns to scale are found to be on average constant. We do not use methods developed in \citet{loeckerMarkupsFirmLevelExport2012} because \citet{loeckerMarkupsFirmLevelExport2012} relies on estimating production elasticities using the literature of estimating production function (\citet{olleyDynamicsProductivityTelecommunications1996}, \citet{levinsohnEstimatingProductionFunctions2003}, \citet{ackerberg_identification_2015}) where some production input is required to be a monotone function of the unobserved productivity, but this monotonicity is unfortunately not guaranteed under firm-specific input distortions. In fact, it is usually believed that domestic private firms in China are more productive but more financially constrained than SOEs, which implies that sometimes more productive firms use less production inputs. Furthermore, we do not observe physical production like most studies. Markups estimated using \citet{loeckerMarkupsFirmLevelExport2012} using nominal production can be uninformative about the true markups as argued by \citet{bond_unpleasant_2021}.
+%
+%The latent nest structure and the nest specific demand elasticities are estimated by maximizing the likelihood of the cost-revenue ratios within each industry using Equation~\eqref{Eq:markupsDistr2} and \eqref{Eq:markupsDistr1}.
+%
+%Under the assumption that the modes of capital and labor distortions in an industry $s$ are both 0, the modes of the labor shares and capital shares are the $\alpha^L_s$ and $\alpha^K_s$. We impose a specific parametric form for the capital distortions and labor distortions:
+%\begin{align*}
+%\ln(\tau_i^L+1)\sim & 2\kappa_s^L\mathbbm{1}[\tau_i^L>0] \cdot \mathcal{N}(0,\sigma^L_{s,+}) + (2-2\kappa_s^L)\mathbbm{1}[\tau_i^L\leq 0] \cdot \mathcal{N}(0,\sigma^L_{s,-}) \text{ , for } i \in \mathcal{S}(s)\\
+%\ln(\tau_i^K+1)\sim & 2\kappa_s^K\mathbbm{1}[\tau_i^K>0] \cdot \mathcal{N}(0,\sigma^K_{s,+}) + (2-2\kappa_s^K)\mathbbm{1}[\tau_i^K\leq 0]\cdot\mathcal{N}(0,\sigma^K_{s,-}) \text{ , for } i \in \mathcal{S}(s)
+%\end{align*}
+%where $\kappa_s^K$ and $\kappa_s^L$ are the probability that $\tau_i^K>0$ and $\tau_i^L>0$ respectively. From the first order conditions of firms' profits maximization, we know: 
+%\begin{align*}
+%\underbrace{\ln(1+\tau_i^L)}_{\text{input distortions}}=\underbrace{\ln\left(\alpha_s\frac{\epsilon_g-1}{\epsilon_g}\right)}_\text{\parbox{4cm}{\centering predicted shares\\[-4pt] w/o input distortions}}-\underbrace{\ln\left( \frac{wL_i}{P_iY_i} \right)}_\text{observed shares}\\
+%\underbrace{\ln(1+\tau_i^K)}_{\text{input distortions}}=\underbrace{\ln\left(1-\alpha_s\frac{\epsilon_g-1}{\epsilon_g}\right)}_\text{\parbox{4cm}{\centering predicted shares\\[-4pt] w/o input distortions}}-\underbrace{\ln\left( \frac{RK_i}{P_iY_i} \right)}_\text{observed shares}
+%\end{align*}
+%The distribution of labor shares and capital shares are: 
+%\begin{align}
+%\ln\left( \frac{wL_i}{P_iY_i} \right) \sim & 2\kappa_s^L\mathbbm{1}\left[\frac{wL_i}{P_iY_i}<\alpha_s\frac{\epsilon_g-1}{\epsilon_g} \right] \cdot \mathcal{N}\left(\ln\left(\alpha_s\frac{\epsilon_g-1}{\epsilon_g}\right),\sigma^L_{s,+} \right) \label{Eq:LshareDistr}\\
+%&+ (2-2\kappa_s^L)\mathbbm{1}\left[\frac{wL_i}{P_iY_i} \geq \alpha_s\frac{\epsilon_g-1}{\epsilon_g} \right] \cdot \mathcal{N}\left(\ln\left(\alpha_s\frac{\epsilon_g-1}{\epsilon_g}\right),\sigma^L_{s,-} \right) \text{ , for } i \in \mathcal{S}(s) \nonumber\\
+%\ln\left( \frac{RK_i}{P_iY_i} \right) \sim & 2\kappa_s^K\mathbbm{1}\left[ \frac{RK_i}{P_iY_i}<1-\alpha_s\frac{\epsilon_g-1}{\epsilon_g}\right] \cdot \mathcal{N}\left(\ln\left(1-\alpha_s\frac{\epsilon_g-1}{\epsilon_g}\right),\sigma^K_{s,+}\right) \label{Eq:KshareDistr}\\
+%&+ (2-2\kappa_s^K)\mathbbm{1}\left[ \frac{RK_i}{P_iY_i}\geq1-\alpha_s\frac{\epsilon_g-1}{\epsilon_g}\right]\cdot\mathcal{N}\left(\ln\left(1-\alpha_s\frac{\epsilon_g-1}{\epsilon_g}\right),\sigma^K_{s,-}\right) \text{ , for } i \in \mathcal{S}(s) \nonumber
+%\end{align}
+%In addition to $1-\alpha_s$ and $\alpha_s$, $\kappa_s^K$, $\kappa_s^L$, $\sigma^K_{s,+}$, $\sigma^K_{s,-}$, $\sigma^L_{s,+}$, and $\sigma^L_{s,-}$ are also estimated. These parameters are estimated by maximizing the likelihood of the observed labor shares and capital shares in each industry using Equation~\eqref{Eq:LshareDistr} and \eqref{Eq:KshareDistr}.
+
+\section{Results} 
+\label{sec:ch3results}
+All the demand and production estimates are the same as those in ZX. The demand elasticities and the latent nest structure are estimated by maximizing the likelihood of firm-level markups, which are measured using firm-level revenue-cost ratios. The industry-specific production elasticities are estimated by maximizing the likelihood of firm-level labor shares and capital shares. Further details about identification and estimation are in ZX.
+
+We follow ZX to use revenue-cost ratios as measurement of firms' markups because firms' returns to scale are assumed to be constant. We do not use methods developed in \citet{loeckerMarkupsFirmLevelExport2012} because \citet{loeckerMarkupsFirmLevelExport2012} relies on estimating production elasticities using the literature of estimating production function (\citet{olleyDynamicsProductivityTelecommunications1996}, \citet{levinsohnEstimatingProductionFunctions2003}, \citet{ackerberg_identification_2015}) where some production input is required to be a monotone function of the unobserved productivity, but this monotonicity is unfortunately not guaranteed under firm-specific input distortions. In fact, it is usually believed that domestic private firms in China are more productive but more financially constrained than SOEs, which implies that sometimes more productive firms use less production inputs. Furthermore, we do not observe physical production like most studies. Markups estimated using \citet{loeckerMarkupsFirmLevelExport2012} using nominal production can be uninformative about the true markups as argued by \citet{bond_unpleasant_2021}.
+
+In the rest of this section, we first report the summary statistics of the estimates and compare the production elasticities of American firms and those estimated using Chinese firm-level data. We then show the predicted TFP gains and how they respond to relaxing the assumptions imposed in HK. 
+
+\subsection{Estimated parameters} \label{sec:estimatorResults}
+Table~\ref{Table:summaryStatsGroupCounts} displays the distribution of industry-level firm counts. The first row is that of single-nest industries and the second row is that of two-nest industries. 462 industries are estimated as having two nest and 61 as having one nest. Industries containing two nests tend to contain more firms. 
+
+%\begin{table}[!htbp] \centering 
+%\caption{Summary statistics on types}
+%  \label{Table:summaryStatsGroupCounts} 
+%\resizebox{\columnwidth}{!}{\begin{tabular}{@{\extracolsep{5pt}}lccccccc} 
+%\\[-1.8ex]\hline 
+%\hline \\[-1.8ex] 
+%&&\multicolumn{6}{c}{type-level firm count}\\
+%from an \textit{s} with mixture & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Pctl(25)} & \multicolumn{1}{c}{Median} & \multicolumn{1}{c}{Pctl(75)} & \multicolumn{1}{c}{Max} \\ 
+%\hline \\[-1.8ex] 
+%No & 61 & 23.0 & 2 & 6 & 15 & 27 & 237 \\ 
+%Yes & 462 & 493.5 & 12 & 118 & 255.5 & 544.5 & 9,947 \\ 
+%\hline \\[-1.8ex] 
+%\end{tabular} }
+%\end{table} 
+
+\input{Tables/summaryStatsGroupCounts.tex}
+
+
+%))\input{Tables/summaryStatsWeights.tex}
+%\resizebox{\columnwidth}{!}{\begin{tabular}
+
+%\input{Tables/summaryStatsAllowGroups.tex}
+%\begin{table}[!htbp] \centering 
+%  \caption{Industry-level summary statistics of estimates allowing for types inside industries} 
+%  \label{Table:summaryStatsAllowGroups } 
+%\begin{tabular}{@{\extracolsep{5pt}}lcccccccc} 
+%\\[-1.8ex]\hline 
+%\hline \\[-1.8ex] 
+%Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Pctl(25)} & \multicolumn{1}{c}{Median} & \multicolumn{1}{c}{Pctl(75)} & \multicolumn{1}{c}{Max} \\ 
+%\hline \\[-1.8ex] 
+%$\E_g[\mu_i+1]$ & 989 & 1.31 & 0.25 & 1.03 & 1.14 & 1.24 & 1.40 & 3.87 \\ 
+%$\sigma_g$ & 989 & 6.22 & 3.79 & 1.35 & 3.48 & 5.21 & 8.26 & 39.94 \\ 
+%$\E_g[e_i^\delta]$ & 989 & 1.01 & 0.02 & 1.00 & 1.00 & 1.01 & 1.02 & 1.14 \\ 
+%ex-ante $P_g[\bar{s}]$ & $928$ & $0.66$ & $0.22$ & $0.27$ & $0.59$ & $0.73$ & $0.82$ & $0.88$ \\ 
+%$\alpha_K$ & 444 & 0.18 & 0.18 & 0.01 & 0.07 & 0.12 & 0.22 & 0.99 \\ 
+%$\alpha_L$ & 444 & 0.41 & 0.24 & 0.03 & 0.22 & 0.34 & 0.57 & 0.99 \\ 
+%scale & 444 & 0.59 & 0.31 & 0.05 & 0.35 & 0.55 & 0.77 & 1.92 \\
+%\hline \\[-1.8ex] 
+%\end{tabular} 
+%\end{table} 
+
+\begin{table}[!htbp] \centering 
+  \caption{Summary statistics of selected estimated parameters} 
+  \label{Table:summaryStatsDemand} 
+  \begin{threeparttable}
+\begin{tabular}{@{\extracolsep{0pt}} lcccccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & Mean & St. Dev. & Pctl(10) & Pctl(25) & Median & Pctl(75) & Pctl(90) \\ 
+\hline \\[-1.8ex] 
+%$\E_g[\mu_i+1]$ & $985$ & $1.30$ & $0.25$ & $1.11$ & $1.14$ & $1.22$ & $1.39$ & $1.57$ \\ 
+%$\E_g[e_i^\delta]$ & $985$ & $1.01$ & $0.02$ & $1$ & $1$ & $1.01$ & $1.02$ & $1.03$ \\ 
+%\rowcolor{lavendergray}
+$w_s$  & $0.73$ & $0.16$ & $0.54$ & $0.66$ & $0.75$ & $0.83$ & $0.89$\\
+
+$\epsilon_g$ & $8.49$ & $3.26$ & $3.99$ & $6.50$ & $8.57$ & $10.27$ & $12.85$ \\  
+$\epsilon_g$ (cost)\tnote{1} & $9.37$ & $3.51$ & $4.50$ & $7.44$ & $9.20$ & $10.91$ & $14.16$ \\ 
+$\epsilon_g$ (revenue)\tnote{2} & $9.07$ & $3.58$ & $4.14$ & $7.06$ & $9.14$ & $10.76$ & $14.12$ \\ 
+$\alpha_s$ & $0.78$ & $0.12$ & $0.64$ & $0.72$ & $0.80$ & $0.87$ & $0.91$ \\ 
+
+%$1-\alpha_s+\alpha_s$(cost)\tnote{1} & $0.96$ & $0.55$ & $0.36$ & $0.53$ & $0.82$ & $1.16$ & $1.83$ \\ 
+%$1-\alpha_s+\alpha_s$ (revenue)\tnote{2} & $0.97$ & $0.55$ & $0.36$ & $0.54$ & $0.84$ & $1.16$ & $1.83$ \\ 
+\hline\\[-1.8ex] 
+\end{tabular} 
+\begin{tablenotes}
+\footnotesize
+\item[1] The distribution is weighted by firms' costs. 
+\item[2] The distribution is weighted by firms' revenues.
+\end{tablenotes}
+\end{threeparttable}
+\end{table} 
+
+The first row in Table~\ref{Table:summaryStatsDemand} shows the ex-ante probability of belonging to the high demand-elasticity nest. In 90\% of the 462 industries that contain two nests, it is more likely to be in the high demand-elasticity nest. This suggests that achieving a high level of demand elasticities is difficult. The second row in Table~\ref{Table:summaryStatsDemand} is the distribution of demand elasticities across 229,064 firms. The third and forth row weight each firm by their costs and revenues respectively. Depending on whether firms are weighted by their costs or revenues, the average demand elasticity is between 8.5 and 9.4 and the median is between 8.6 and 9.2. There is large variation in demand elasticities with the top 10 percentile about three times larger than the bottom 10 percentile. The fifth row reports the distribution of estimated production elasticities across firms. %The fifth till seventh rows report the distribution of estimated returns to scale across firms. The fifth row is the unweighted distribution, and the other two rows are weighted by costs and revenues respectively. On average, the industrial firms have constant returns to scale, but there is large variation across industries.
+
+The demand elasticities estimated in ZX are on average 3 times larger than the 3 assumed in HK, but it seems that ZX's estimates are closer to other studies' estimates while HK's value is around or below the lower bound. A more detailed comparison with other studies' estimates is provided in ZX.
+
+%Table~\ref{Table:summaryStatsAllowGroups} also reports the summary statistics of estimated markups, demand elasticities, and expected cost shocks at the type level and estimated production elasticities and returns to scale at the industry level, treating each type or industry as having the same size. We document the large variation of industry-level production elasticities and returns to scale. The average returns to scale of industries are 0.55 and the average of all the firms is 0.47, i.e. weight each industry by its firm counts. Demand elasticities also vary across types, with the top 10 percentile more than 3 times larger than the bottom 10 percentile. The average demand elasticities of types are 6.33 while the average of all the firms is 8.49. We use the latter in our counterfactual case of homogeneous markups and in the comparison to HK because it better reflects the average of our data for our production elasticities estimation. The top 10 percentile of markups is about $40\%$ higher than the bottom 10 percentile of markups. 
+
+%There is little markups estimation for Chinese firms in literature, so we check our estimates by comparing to American markups estimated by existing studies. The cost-weighted average markups from our estimation are 1.15 which coincides with the 1.15 benchmark cost-weighted average markups in \citet{edmondHowCostlyAre2019}. It is also consistent with \citet{baqaeeProductivityMisallocationGeneral2020}'s estimate when using the method developed by \citet{loeckerMarkupsFirmLevelExport2012}. \citet{loeckerMarkupsFirmLevelExport2012} itself estimates average markups to be between $1.10$ and $1.28$, a range contains our estimates. In terms of sales-weighted average markups, ours is 1.17 which is below the estimates from \citet{deloeckerRiseMarketPower2020} whose sales-weighted average markups are $1.20$ in 1980 and $1.60$ in 2012. Our median markups are 1.24, a bit lower than the 1.30 median by \citet{feenstra_globalization_2017}. All these studies mentioned so far using American data. Compared to firms from developing countries, our 1.15 average is higher but not far from the 1.12 average markups found by \citet{petersHeterogeneousMarkupsGrowth2020} using Indonesian data.
+
+%The estimated average returns to scale and demand elasticities from our reduced form analysis in Section~\ref{sec:reducedForm} are 0.61 and 10.87. The former is a bit higher than the industry-level average of returns to scale 0.55 and more far away from our firms-level average 0.47. The latter is higher than our type-level average of demand elasticities 6.33, and also higher but closer to the firm-level average 8.49. 
+
+%Figure and figure present the goodness of fit of our estimators. Figure shows how well our estimated demand elasticities and expected cost shocks fit the observed revenue-cost ratios. Figure shows how well our estimated estimated production elasticities and distortions fit the observed labor and capital expenditure shares.
+
+%Our estimated distortions suggest that SOEs are more likely to use more capital and labor compared to domestic private firms. Although there are some domestic private firms facing lower distortions, i.e. using relatively more capital and labor than most SOEs, and there are SOEs facing higher distortions, i.e. using relatively less capital and labor than most domestic private firms, the distortion distribution of domestic private firms first-order stochastically dominates that of SOEs (Table~\ref{Table:EstDistortionsDifferentFirmTypes}). The large variation within both ownership types may result from a fuzzy connection between the ownership labels and their business environment. Some domestic private firms may still enjoy favorite financial access because they used to be an SOE or some SOEs hold shares in them. Domestic private firms may receive financial support from central or local government if they are deemed as strategically important by the government. Sometimes, the distinction between an SOE and a domestic private firm is not clear. Normally, there are two criteria of determining whether a firm is an SOE: its registration type and its major share holders. A firm can be labeled as an SOE, according to the first criterion, if it is registered as an SOE; it can also be called an SOE, based on the latter criterion, if its major shareholders are SOEs or some public agents. The same applies to domestic private firms. The two criteria generally agree except for some special cases where, for example, firms are labeled as SOEs under one criterion but not under the other. To remove this ambiguity, Table~\ref{Table:EstDistortionsDifferentFirmTypes} keeps only those observations where the two criteria agree. 
+%
+%
+%
+%
+%\begin{table}[htbp!]
+%\centering
+%\begingroup\normalsize
+%\begin{tabular}{llrrrrrrr}
+%  & firm type & N & Mean & Min & Pctl(25) & Median & Pctl(75) & Max \\ 
+%  \hline
+%$\tau_i^K$ & domestic priv & 164396 & 1.36 & -0.99 & -0.50 &  0.08 & 1.41 & 305.22 \\ 
+%   & SOE &  10600 & 0.41 & -1.00 & -0.73 & -0.38 & 0.33 & 147.12 \\ 
+%   \hline
+% & all & 174996 & 1.31 & -1.00 & -0.52 &  0.05 & 1.34 & 305.22 \\ 
+%   \hline
+%$\tau_i^L$ & domestic priv & 164396 & 0.94 & -0.98 & -0.35 &  0.16 & 1.18 &  54.49 \\ 
+%   & SOE &  10600 & 0.33 & -0.99 & -0.53 & -0.13 & 0.54 &  26.08 \\ 
+%   \hline
+% & all & 174996 & 0.91 & -0.99 & -0.36 &  0.13 & 1.13 &  54.49 \\ 
+%   \hline
+%\end{tabular}
+%\endgroup
+%\caption{Estimated distortions for different firm types} 
+%\label{Table:EstDistortionsDifferentFirmTypes}
+%\end{table}
+
+%\subsection{The inferred markups: biased or not}
+%The results in Table~\ref{Table:summaryStatsAllowGroups} show that the average returns to scale is about 0.6. If this is the true returns to scale, this suggests more than $80\%$ of the firms in our data set price below marginal cost. This also means if we correct the markups inferred in the first identification step, our estimated markups would be very different from those in the literature listed above. In fact, one should not use the returns to scale estimated from the third step to correct the markups inferred in the first step because simultaneously identify returns to scale and markups using only revenue data and no physical production data is not possible. We provide a formal proof for this in Appendix~\ref{ASec: identificationMarkups} and show that the same problem exists as long as the production function is homogeneous of degree r for any positive number r. A similar finding is also discussed in \citet{bond_unpleasant_2021}. If one ignores the identification issue and uses the returns to scale estimated in the third step to correct the markups inferred in the first step, updating can still take place but the update happens only when the sample analogues differ from their true values. If we have the entire population and our model correctly specifies the data generating process, the markups inferred from the first step should always gives constant returns to scale in the third step.
+%
+%%The third step gives estimated returns to scale. One natural way of correcting the biases is to use the estimated returns to scale in our third step to correct the markups inferred in the first step. Alternatively, one can also combine all three steps together to infer markups and estimate demand elasticities and returns to scale simultaneously. Unfortunately, both candidates suffer from an identification issue. In fact, as long as the production function is homogeneous of degree r for any positive number, we can not identify markups and returns to scale without physical production (formal proof and more details in Appendix~\ref{ASec: identificationMarkups}).  
+%
+%In fact, we should look at the production model as a simplification of a richer model where firms' use labor, tangible assets, and intangible assets. When maximizing profits, firms take intangible assets as given and choose the optimal labor and tangible assets. The capital we observed in the data is the tangible assets and we do not observe intangible assets. Therefore, the sum of $1-\alpha_s$ and $\alpha_s$ is only part of the returns to scale. Therefore, firms may still be close to constant returns to scale when the estimated $\alpha_s+1-\alpha_s$ is below 1. We treat intangible assets as given because intangible asset such as knowledge and experience are more difficult to adjust than labor and tangible assets. Appendix~\ref{ASec: intangibleAssets} shows that the procedures of estimating TFP gains from equalizing the marginal revenue of labor and tangible assets in this extended model is the same as the one presented above and our predicted TFP gains should be interpreted as the gains from equalizing the marginal revenue of labor and tangible assets.
+%
+%% This may cause our model and estimation strategy internally inconsistent. However, in spite of the possible bias in inferred markups, the demand elasticities estimated by our structural model are closely aligned with various studies using data from both developed and developing countries. This suggests the returns to scale may be larger than those estimated by our model. In fact, we may underestimate returns to scale because non-wage labor income is not observed. Furthermore, the capital observed in the data does not include intangible assets. If firms are on average constant returns to scale, the sum of production elasticities of labor and tangible asset can be below one. The model presented in this paper is a simplification of a model where firms take their intangible asset in each period as given and maximize profits by altering labor and capital. We treat intangible assets as given because intangible asset such as knowledge and experience are more difficult to adjust than labor and tangible assets. Appendix~\ref{ASec: intangibleAssets} show that the procedures of estimating TFP gains from equalizing the marginal revenue of labor and tangible assets in this extended model is the same as presented above.
+%
+%% It may look surprising that one can not use the returns to scale estimated in the third step to correct markups inferred in the first step. In short, as long as we accept the model is properly specified, the update is possible only because sample analogues differ from their true values. If we have the entire population and our model correctly specify the data generating process, the markups inferred from the first step should cause estimated returns to scale to be exactly 1.
+%
+%People familiar with this data may argue that the unobserved non-wage labor share leads to the low $\alpha_s+1-\alpha_s$ and may prefer following HK to scale up the observed labor share or using the observed number of employees. We agree that the unobserved non-wage labor is indeed a problem for anyone using this data but the two methods proposed are unlikely good solutions. If these methods can correct estimated $\alpha_s+1-\alpha_s$, reduced-form analysis using scaled wage expenditure or the number of employees should also give higher estimated returns to scale. However, we find the estimated returns to scale in both cases are around 0.6.
+%
+%%We correct the bias in inferred markups using the average returns to scale commonly found in literature. We do not use the returns to scale from our reduced form because the unobserved labor shares and intangible assets leads to the underestimation of the returns to scale. In fact, the 0.6 average returns to scale are too low compared to the observed revenue-cost ratio. If 0.6 is the true average returns to scale, almost $80\%$ of firms in our data have negative markups. We also do not use HK's method to correct the labor shares because if the true labor shares are the same as HK's corrected ones, the reduced form analysis using the corrected labor shares will still give 0.6 returns to scale. This indicates that HK's method is very likely not the solution. However, we use the observed number of employees to do a robustness check. There, wage are set to the value so that the aggregate labor share is $50\%$, which is the assumed aggregate labor share in HK.
+%
+%Given the fact that directly using revenue-cost ratio provides estimated markups in line with those in literature and our estimated $\alpha_s+1-\alpha_s$ is only part of the returns to scale, we prefer to not correcting the inferred markups in our first step at all. Even if our estimators contains some bias, our robustness check shows that the size of possible bias does not matter to our main results (Section~\ref{sec:robustnes}).
+
+%We employ multiple ways of correction and examine how these different correction methods affect our final results. We start with correcting the bias using the returns to scale estimated by our reduced-form analysis and assuming all the firms have the same returns to scale in the first step. However, this correction still have internal inconsistency as our structural estimators suggest variation in the industry-level returns to scale. The inferred markups after correction still contain variations due to heterogeneous returns to scale. 
+
+%The second correction allows for the variation in returns to scale by using the estimated returns to scale when apply the reduced-form analysis to each of the 2-digit industries (Appendix~\ref{ASec:RTSreducedForm}). For those industries that are two small for the reduced form analysis, we set their returns to scale to the one in the previous correction. This method can account for the variation of returns to scale across 2-digit industry but not within.
+
+%The third correction assumes that the bias in inferred markups do not affect the shape of the distribution of estimated industry-specific returns to scale, so we first estimate the model without any correction in the first and then scale down or up the returns to scale estimated from the third step so that its average matches those from the reduced form analysis. We than use these returns to scale to correct the markups and run the estimation again.
+
+%We may correct the bias more than desired because the wage expenditure in our data excludes the non-wage part. To deal with this, we use two remedies. The first one follows HK and scale up wage expenditure so that it matches $50\%$. The second one uses the number of employees instead of labor expenditure. The weakness of the former is it assume the unobserved part is proportional to the observed part; the limitation of the latter is labor quality varies a lot. Nevertheless, they are useful specification as robustness checks. We carry out all the three correction options for both remedies.
+
+%As our structural estimation provides estimated returns to scale, it is natural to use the estimated returns to scale to correct the bias in inferred markups. We then update the estimated returns to scale using the new markups. We keep doing this until the estimators converge. Another candidate solution is to infer markups and estimate demand elasticities and returns to scale simultaneously instead of in three steps.
+
+%\subsection{Bias correction: the production approach}
+%[Need to rewrite this part] Applying off-the-shelve production method is known to cause biases. The most important bias for our model is that production elasticities are downward biased when markups are heterogeneous since our focus is on the impact of heterogeneous markups. When using the production approach, we assume labor to be a variable input and follow \citet{kletteInconsistencyCommonScale1996a} to use two-digit industry price index and production to deal with heterogeneous markups before doing the production function estimation. 
+
+%\subsection{Markups and sizes}
+%When discussing the correlation between markups and sizes, existing research usually use sales to measure sizes. Our project also follows this practice. However, we find mixed evidence about whether there is a positive correlation between markups and sales. Following \citet{edmondHowCostlyAre2019}, we define relative sales as those normalized by the unweighted industry-level average, relative expected markups as expected markups normalized by the cost-weighted industry-level average, and relative revenue-cost ratios as revenue-cost ratios normalized by the cost-weighted industry-level average. The revenue-cost ratios are directly observed in our data and are treated as the realized markups, denoted as $\mu_i+1$. The expected markups $\E_g[\mu_i+1]$ are estimated by our model. If there is a positive correlation between markups and sales, we should see larger firms more likely to belong to the higher-markup type of an industry and to have higher relative expected markups. We should also see larger firms have higher relative revenue-cost ratio. However, the first two columns of Table~\ref{Table:relationMarkupsSales} demonstrate negative correlations.
+%
+%%\newpage
+%%\begin{landscape}
+%\input{Tables/relationMarkupsSales.tex}
+%%\resizebox{\columnwidth}{!}{}
+%%\newpage
+%\input{Tables/relationMarkupsSalesSmall.tex}
+%%\end{landscape}
+%
+%There are multiple explanations for our different results. One possibility is that the positive correlation is more likely in a market-based economy but Chinese economy experience various distortions, such as entry barriers and entry permissions, the lack of market-based allocation of financial credits, the significant roles for State-Owned Enterprises (SOEs), et cetera. In fact, most studies on the positive correlation uses American firms (\citet{bernard_plants_2003}, \citet{atkeson_pricing--market_2008},  \citet{loeckerMarkupsFirmLevelExport2012}, and \citet{edmondCompetitionMarkupsGains2015}, \citet{edmondHowCostlyAre2019}) \footnote{To the best of our knowledge, there is only one paper, \citet{guptaMarkupsMisallocationIndiaPdf2021}, using data from developing countries that support the positive correlation. There it uses Indian data.} and American economy is more market-based than China. In the last two columns of Table~\ref{Table:relationMarkupsSales}, we drop all the SOEs in our data. The magnitude of the negative correlation is smaller but still significant. Suggesting SOEs contribute to some of the negative correlations. SOEs are only one part of all the possible distortions in China and our results in the later section demonstrates that the observed firm ownership is an informative but noisy indicator of whether a firm behaves like a typical SOE. It is, therefore, not surprising that dropping all the SOEs does not provide significant positive correlations.
+%
+%Another explanation to the missing positive correlation in Table~\ref{Table:relationMarkupsSales} is that this positive correlation may be more salient in industries where firms act as oligopolies, or in other words, only a few firms are interacting. This is also the assumption that generates the positive correlation in \citet{atkeson_pricing--market_2008} and \citet{edmondCompetitionMarkupsGains2015}. In Table~\ref{Table:relationMarkupsSalesSmall}, we check whether industries with less than 25 firms demonstrate a positive correlation. Similar to Table~\ref{Table:relationMarkupsSales}, the first two columns include SOEs while the last two drop them. Different from our expectation, the negative correlations become more salient and dropping SOEs attenuate it slightly. This result looks puzzling. Small industries seem to experience more market interruptions not captured by the presence of SOEs. Perhaps, entry permission imposed by the government artificially create some small industries so that small industries deviate more from market equilibrium. Similar results remain when looking at industries with less than 20 firms or 30 firms. 
+%
+%The third explanation is the observed sizes are distorted due to capital and labor distortions. If high-markup firms face larger distortions while low-markup firms face lower or even negative distortions, we won't be able to observe the positive correlation even if it exists in a distortion-free market. Since we do not find evidence to support the positive correlation, we favor not imposing any ex-ante correlation between productivity and markups and let the data tells us whether a larger firm belongs to a high-markup type of an industry. Interestingly, in spite of no restrictions, our model seems to successfully tease off part of the negative correlation and treat some part of the revenue-cost ratio which is negatively correlated with sales as cost shocks because the coefficients for $\ln(\E_g[\mu_i+1])$ are smaller in magnitude than those for $\ln(\mu_i+1)$. 
+%
+%Another interesting finding is that although markups and sales are negatively correlated, we do observe a positive correlation between the relative labor revenue productivity (hereafter labor productivity) and the relative sales (Figure~\ref{Figure:salesLProductivityDensity}). This is used by \citet{edmondHowCostlyAre2019} to identify the parameters which determine the positive correlations between markups and productivity because if markups does not vary with productivity, then labor productivity and markups also do not vary with sales. Following \citet{edmondHowCostlyAre2019}, relative labor productivity is defined as labor productivity normalized by the average at the industry level and labor productivity is sales divided by labor expenditures. It may look contradicting that our data demonstrates a positive correlations between the relative labor productivity and the relative sales but a negative correlation between the relative markups and the relative sales. However, when firms are decreasing returns to scale, higher sales do not translate into higher profits. The positive correlation we see in Figure~\ref{Figure:salesLProductivityDensity} may simply due to the fact that, holding labor expenditures constant, higher sales create higher labor productivity because the numerator increases while the denominator does not change.
+%
+%
+%\begin{figure}[htbp!]
+%\centering
+%\includegraphics[width=0.5\columnwidth]{Pictures/salesLProductivityDensity.png}
+%\caption{Joint density of relative sales and relative labor revenue productivity}
+%\label{Figure:salesLProductivityDensity}
+%\floatfoot{Notes: sales and relative labor revenue productivity are in their relative values, i.e. they are normalized industry-type average.}
+%\end{figure}
+
+%\subsection{Markups and market concentration}
+%Markups indicate how much market power a firm has and how much concentration there is in a market. Therefore, our markups should be positive correlated with indicators about market concentration. Figure~\ref{Figure:markupsFirmCount} shows how expected markups at the industry level correlated with the number of firms in an industry. More firms usually indicate less concentration and hence lower markups. Figure~\ref{Figure:markupsFirmCount} confirms this correlation. It also shows when an industry type has a lot of SOEs relative to the total number of firms in the industry, it is more likely to deviate from this negative linear correlation. A similar pattern remains when we look at the market share of SOEs in an industry type (Figure~\ref{Figure:markupsFirmCountSalesShare}). Besides, we compare our industry-level average markups to the Herfindahl indexes in Figure~\ref{Figure:markupsHerf} and find that our markups increase with the Herfindahl indexes.
+%
+%\begin{figure}[htbp!]
+%\centering
+%\begin{subfigure}{.5\textwidth}
+%  \centering
+%  \includegraphics[width=\columnwidth]{Pictures/markupsFirmCount.pdf}
+%\caption{Shares of SOEs as firm-count shares}
+%\label{Figure:markupsFirmCount}
+%%\floatfoot{Notes: industry-level expected markups are cost-weighted average}
+%\end{subfigure}%
+%\begin{subfigure}{.5\textwidth}
+%  \centering
+%  \includegraphics[width=\columnwidth]{Pictures/markupsFirmCountSalesShare.pdf}
+%\caption{Shares of SOEs as sales shares of SOEs}
+%\label{Figure:markupsFirmCountSalesShare}
+%%\floatfoot{Notes: industry-level expected markups are cost-weighted average}
+%\end{subfigure}
+%\caption{Relation between industry-level firm counts, expected markups, and shares of SOEs}
+%\label{fig:markups}
+%\floatfoot{Notes: industry-level expected markups are cost-weighted average}
+%\end{figure}
+%
+%
+Figure~\ref{Figure:alphas} shows the distribution of production elasticities of American firms and the production elasticities estimated using Chinese firm-level survey data.  It shows that American firms are more capital intensive than Chinese firms.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\columnwidth]{Pictures/alphaBenchmarkUS.pdf}
+\caption{$\alpha_s$ of Chinese firms and American firms}
+\label{Figure:alphas}
+%\floatfoot{Notes: industry-level expected markups are cost-weighted average}
+\end{figure}
+
+\subsection{TFP gains and model assumptions}
+According Table~\ref{Table:TFPGainsTotal}, the predicted TFP gains using estimated demand elasticities and production elasticities are $310\%$. The TFP gains from reallocating capital and labor within nests are $297\%$ and from reallocating across nests $3\%$. This implies that the reallocation within nests explains 99\% of the predicted TFP gains. \label{par:ch3betweenAllocation}
+\begin{table}[!htbp]
+\centering
+\caption{TFP gains in China (2005)}
+\label{Table:TFPGainsTotal}
+\begin{tabular}{ccc}
+\hline\hline
+within industry ($\%$) & across industry ($\%$) & total ($\%$)\\
+\hline
+296.8 & 3.4 & 310.3\\
+\hline\hline
+\end{tabular}
+\end{table}
+
+We then do an experiment by taking HK's parameters and then calculating the predicted TFP gains when replacing their estimates by ZX. Table~\ref{Table:TFPGainsComparison} summarizes these results. The predicted TFP gains in the first row, i.e. using US firms' production elasticities and setting demand elasticities to 3, is higher than those reported in HK because there is some discrepancy between the datasets used by HK and by ZX. Although both datasets are Chinese annual survey data, we use an updated version of this survey data. Appendix~\ref{ASec:dataVersion} compares the aggregate variables calculated using both datasets with the relevant macro variables published in the Chinese Yearbooks and show that our dataset is closer to the data used to construct the yearbooks. Table~\ref{Table:TFPGainsComparisonLong} in Appendix~\ref{ASec:TFPgainsComparison} includes the same experiments using HK's data.
+
+The messages in Table~\ref{Table:TFPGainsComparison} are as follow. 1. Predicted TFP gains are larger if we use US firms' production elasticities, which implies that the predicted TFP gains in HK are the gains from removing distortions and from adopting to US production technology. 2. While HK sets demand elasticities to 3, a very conservative value as they point out in their paper, the demand elasticities that are consistent with the observed revenue-cost ratios are much higher, on average around 8.5. The predicted TFP gains at the inferred demand elasticities are about $300\%$. 3. Predicted TFP gains are $70$ percentage points lower if demand elasticities are allowed to differ across industries. However, allowing demand elasticities to differ within industries have a relative small impact, i.e. less than $10$ percentage point changes. 4. The impact of using US firms' production elasticities and of using homogeneous demand elasticities are similar. Both would cause the predicted TFP gains to increase from $300\%$ to about $350\%$. \label{par:TFP gainsComparisonDiscussion}
+
+
+%use our estimated production elasticities and demand elasticities to show how the aggregate TFP gains change in HK's framework when relaxing its assumptions. To replace the production elasticities and demand elasticities in HK by our estimates, we use industry code to link two data sets. Cost is not provided in HK, so we can not link type-level estimates to their data. Instead, we estimate demand elasticities using our data as if only one type exists in an industry, i.e. no demand elasticities variation in any industry, and link them to HK's data. The estimators are less dispersed than but similar to those of our preferred model. Summary statistics of these estimators are provided in Appendix~\ref{ASec:epsilonOneType}. 
+
+%\input{Tables/TFPGainsComparisonShort.tex}
+\input{Tables/TFPGainsComparisonOur.tex}
+%\tnote{1}
+%\begin{threeparttable}
+%\begin{tablenotes}
+%\footnotesize
+%\item[1] Each industry contains one nest.
+%\item[2] Each industry can contain one or two nests.
+%\end{tablenotes}
+%\end{threeparttable}
+  
+
+
+%\begin{figure}[htbp!]
+%\centering
+%\includegraphics[width=\columnwidth]{Pictures/tauTwoSpecHK.png}
+%\caption{Distribution of input distortions under different parameters}
+%\label{Figure:markupsHerf}
+%%\floatfoot{Notes: industry-level expected markups are cost-weighted average}
+%\end{figure}
+
+
+%As shown in Table~\ref{Table:TFPGainsComparisonShort}, when we increase the demand elasticities in HK from 3 to 8.5, TFP gains jump from $87\%$ to $362\%$ and remains around $300\%$ when introducing heterogeneity in demand elasticities. The number drops significantly once we introduce non-constant returns to scale and is $59\%$ when demand elasticities are estimated from micro data. Doing the same exercise using our data produces lower TFP gains but such pattern remains (Appendix~\ref{ASec:HKComparison} provides a complete comparison between the two data and it demonstrates this pattern). Our data is a newer version of the ASM and the two data produce different results. Appendix~\ref{ASec:dataVersion} compares both versions to the macro variables published in China Statistical Yearbooks. Our data matches the macro variables better than HK's. 
+
+%\begin{table}[!htbp]
+%\centering
+%\caption{Within-type TFP gains in China (2005) comparison across models}
+%\label{Table:TFPGainsComparisonShort}
+%\resizebox{\columnwidth}{!}{\begin{tabular}{c|ccc}
+%\hline\hline
+%Data & $\alpha$ & $\sigma$ & TFP gains (\%)\\
+%\hline
+%\rowcolor{lavendergray}
+%\multirow{5}{*}{HK} & calibrated using US firms (HK) & 3 & 86.6 \\
+%& calibrated using US firms (HK) & 8.4 & 358.2 \\
+%& calibrated using US firms (HK) & heterogeneous(w/o subgroup) & 292.5\\
+%& My estimated Non-CRS & 3 &  59.0\\
+%& My estimated Non-CRS & 8.4 & 80.8 \\
+%& My estimated Non-CRS &  heterogeneous (w/o subgroup) & 73.5\\
+%\hline\hline
+%\end{tabular}}
+%\end{table}
+
+Table~\ref{Table:industryLKchanges} displays the reallocation across nests by showing how the nest-level labor and capital usage change after removing the input distortions. More than half of the nests reduce their capital and labor usage while some nests' capital and labor are 10 and 7 times larger.
+
+\begin{table}[!htbp] \centering 
+  \caption{Changes in nest-level labor and capital}
+  \label{Table:industryLKchanges} 
+\begin{tabular}{@{\extracolsep{5pt}}lcccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+Statistic & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Pctl(25)} & \multicolumn{1}{c}{Median} & \multicolumn{1}{c}{Pctl(75)} & \multicolumn{1}{c}{Max} \\ 
+\hline \\[-1.8ex] 
+$\frac{L_g^*}{L_g}$ & 0.98 & 0.19 & 0.78 & 0.93 & 1.12 & 3.54 \\ 
+$\frac{K_g^*}{K_g}$ & 1.16 & 0.07 & 0.67 & 0.99 & 1.43 & 7.42  \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
+\end{table}
+
+
+%Reallocation causes aggregate labor and capital income share to increase by $6$ percentage points (Table~\ref{TABLE:LKIncomeShareChanges}). The observed labor income share is higher than capital income share and is predicted to have a larger increase. Labor income share increases from $20\%$ to $27\%$, up by 7 percentage points while capital income share stays around $11\%$ and drops by about 1 percentage point. The labor income share increases more and the capital income share increases when we keep all the other primitives but set the demand elasticities to be 8.5, the average of our estimated demand elasticities (Table~\ref{TABLE:LKIncomeShareChangesHomo}). The increase in the total labor and capital income share becomes $12$ percentage points, with an increase of $11$ percentage points and $0.1$ percentage points respectively for labor and capital. The increase in aggregate labor and capital income share almost doubles under the homogeneous-markups case.
+
+%\input{Tables/IncomeShareChanges.tex}
+
+%\input{Tables/LKIncomeShareChanges.tex}
+
+%\input{Tables/LKIncomeShareChangesHomo.tex}
+
+%TFP gains does not change much under homogeneous markups. They are more sensitive to the level of average markups rather than the variations. Keeping all the other primitives the same as those estimated from our model, when demand elasticities are all equal to 8.5, within-industry gains are $43.2\%$, less than 1 percentage point lower than those under heterogeneous markups. Taking into account the gains of reallocation across industries, TFP gains under homogeneous demand elasticities are $51.8\%$, about 1 percentage point higher than those under heterogeneous demand elasticities, meaning removing the variations in expected markups slightly increases aggregate TFP gains. However, if we not only remove the variations in demand elasticities and also reduce the demand elasticities to 3, within-industry TFP gains become $37.4\%$ and the aggregate TFP gains are $44.2\%$. Notice, this is different from estimating our model parameters assuming demand elasticities to be 3 as the one shown in Table~\ref{Table:TFPGainsComparisonLong} in Appendix~\ref{ASec:HKComparison} because there the primitives are different from the ones produced by our preferred model specification.
+
+%Labor income shares increase because the reallocation from high-markup to low-markup firms dominates the reallocation in the other direction. Since firms inside the same industry type have the same demand elasticities and the same production elasticities, we look at changes at the type level instead of the firm level. Although the pattern is similar in both figures, there is a significant negative correlation in Figure~\ref{Figure:LChanges} but not in Figure~\ref{Figure:KChanges}. The difference between the changes of capital and labor income share is then exaggerated by whether the increases or decreases in labor or capital usage take place in types with higher labor or capital production elasticities, because income shares are more sensitive to usage changes in types with larger production elasticities. Figure~\ref{Figure:KChangesAlphaK} and Figure~\ref{Figure:LChangesAlphaL} show higher production elasticities are usually associated with a larger increase in usage. It also demonstrates that most types dwell in the region where $\alpha_K<0.3$ whereas they are more spread out for $\alpha_L$. Therefore, labor income share is more sensitive to increases in labor usage which amplifies the negative correlation we observed in Figure~\ref{Figure:LChanges} and creates a larger increase in labor income share.
+
+
+
+
+% that high-markup industries are more likely to reduce their capital and labor usage. Although this pattern is slightly more salient for labor than for capital, it can not explain the big difference in labor and capital income share increases and the interaction with production elasticities is needed. Income shares are more sensitive to changes in production factor usage in industries with larger production elasticities of the production factor. Figure~\ref{Figure:KChangesAlphaK} and Figure~\ref{Figure:LChangesAlphaL} show most industries dwell in the region where $\alpha_K<0.25$ whereas they are more spread out for $\alpha_L$. Therefore, labor income share is more sensitive to changes in labor usage and experience a larger increase.
+
+Changes in the nest-level input usage from removing the input distortions reflect the allocation across nests. Figure~\ref{fig:KLChanges} show how these changes are related to nests' characteristics, namely production elasticities, $1-\alpha_s$ and $\alpha_s$, and demand elasticities $\epsilon_g$. There is no clear pattern between changes in input usage and demand elasticities as shown in Figure~\ref{Figure:KChanges} and Figure~\ref{Figure:LChanges}. However, Figure~\ref{Figure:KChangesAlphaK} and Figure~\ref{Figure:LChangesAlphaL} show that nests with higher demand for production inputs due to their technology, i.e. higher $1-\alpha_s$ and $\alpha_s$, tend to receive more production inputs in the reallocation.
+
+\begin{figure}[htbp!]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+\caption{$\ln\left(\frac{K_g^*}{K_g}\right)$ vs. $\epsilon_g$}
+\label{Figure:KChanges}
+\includegraphics[width=\columnwidth]{Pictures/KChangesEarlyTrim.png}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+\caption{$\ln\left(\frac{L_g^*}{L_g}\right)$ vs. $\epsilon_g$}
+\label{Figure:LChanges}
+\includegraphics[width=\columnwidth]{Pictures/LChangesEarlyTrim.png}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+  \centering
+\caption{$\ln\left(\frac{K_g^*}{K_g}\right)$ vs. $1-\alpha_g$}
+\label{Figure:KChangesAlphaK}
+\includegraphics[width=\columnwidth]{Pictures/KChangesAlphaKEarlyTrim.png}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+\caption{$\ln\left(\frac{L_g^*}{L_g}\right)$ vs. $\alpha_g$}
+\label{Figure:LChangesAlphaL}
+\includegraphics[width=\columnwidth]{Pictures/LChangesAlphaLEarlyTrim.png}
+\end{subfigure}
+\caption{Changes in nest-level capital and labor usage}
+\label{fig:KLChanges}
+\end{figure}
+
+%\begin{figure}[htbp!]
+%\centering
+%\caption{Change in capital usage versus markups}
+%\label{Figure:KChanges}
+%\includegraphics[width=0.8\textwidth]{Pictures/KChangesEarlyTrim.pdf}
+%\end{figure}
+%
+%\begin{figure}[htbp!]
+%\centering
+%\caption{Change in labor usage versus markups}
+%\label{Figure:LChanges}
+%\includegraphics[width=0.8\textwidth]{Pictures/LChangesEarlyTrim.pdf}
+%\end{figure}
+%
+%\begin{figure}[htbp!]
+%\centering
+%\caption{Change in capital usage versus $\alpha_K$}
+%\label{Figure:KChangesAlphaK}
+%\includegraphics[width=0.8\textwidth]{Pictures/KChangesAlphaKEarlyTrim.pdf}
+%\end{figure}
+%
+%\begin{figure}[htbp!]
+%\centering
+%\caption{Change in capital usage versus $\alpha_L$}
+%\label{Figure:LChangesAlphaL}
+%\includegraphics[width=0.8\textwidth]{Pictures/LChangesAlphaLEarlyTrim.pdf}
+%\end{figure}
+
+%\subsection{Robustness checks}\label{sec:robustnes}
+%This subsection checks whether our main results are sensitive to possible biases in our estimated demand elasticities and labor production elasticities. The underlying assumption here is the average demand elasticities and labor production elasticities obtained in our reduced form analysis are close enough to the true values. The first three rows of Table~\ref{Table:TFPGainsRobustness} scale up our estimated demand elasticities so that the average equals 12.90, the demand elasticities obtained from our reduced form analysis. We carry out the scaling for three types of average: value-added based average, sales-based average, and cost-based average. The average of our estimators before the scaling is reported in the fifth column.  The fourth till sixth row scale up our estimated labor production elasticities so that the average is 0.5, the value imposed by HK. The seventh till ninth row scale them to 0.44, the labor production elasticities from our reduced form analysis while the last three rows replace the labor expenditure in our reduced form analysis by the number of employees.
+%
+%The last column reports the predicted within-industry TFP gains. Unlike in Table~ \ref{Table:TFPGainsComparisonShort}, our predicted TFP gains are fairly stable, ranging between $43.3\%$ and $56.7\%$. Therefore, we believe the possible biases in our estimators are probably not crucial for our main results.
+%
+%
+%\input{Tables/TFPGainsRobustness.tex}
+\section{Alternative explanations}
+The model used in this paper to calculate predicted TFP gains rely assumptions that can be strong. In this section, we discuss the implications on our results when some of the assumptions we impose are relaxed, which includes heterogeneous production elasticities and the existence of fixed.
+
+\subsection{Heterogeneous labor share within industry}
+\label{Subsec: heteroAlpha}
+The main results above treat the variation in the labor-capital-expenditure ratio within industries as distortions. However, technological heterogeneity can also cause the variation. If we go to the other extreme and assume all this variation in labor-and-capital-expenditure ratios as technological differences and remove only the output distortions, the predicted TFP gains would be $228\%$ instead of $297\%$. This implies that the main source of distortions is the output distortions that make firms too big or too small.
+
+\subsection{Existence of fixed costs in the observed total costs}
+\label{Subsec:fixedCost}
+The inference of demand elasticities assumes that the observed total costs only contain variable costs. However, it is possible that the total costs include fixed costs. We do robustness check by assuming that a fixed proportion of the total cost is the variable cost. In Table~\ref{Table:TFPGainsComparisonFixedCost}, we report the predicted TFP gains when $90\%$, $80\%$, and $70\%$ of the total costs are variable costs. When introducing $10\%$ of fixed costs, predicted TFP gains decrease from about $300\%$ to $170\%$, and the average demand elasticities drop from 8.5 to 4.7. Higher share of fixed costs would give lower predicted TFP gains and lower average demand elasticities.
+
+\input{Tables/TFPGainsComparisonFixedCost.tex}
+
+
+\section{Conclusion}
+Measuring the TFP costs of misallocation due to input and output distortions has generated great interest, especially following \citet{hsiehMisallocationManufacturingTFP2009}, but how to estimate demand and production parameters using firm-level data remains a challenge. Our paper uses the method and estimates in \citet{zhangFactorShares} to review the value of predicted TFP gains from removing the distortions while holding firms' markups constant. We find the predicted TFP gains are three times larger than the value reported by \citet{hsiehMisallocationManufacturingTFP2009} unless 20\% of the observed costs are fixed costs. We also find that the predicted TFP gains in China reported by \citet{hsiehMisallocationManufacturingTFP2009} would be about 20\% lower if using estimated production elasticities, which implies that \citet{hsiehMisallocationManufacturingTFP2009}'s results are a mixture of the gains from removing distortions and from shifting to the American technology. The production elasticities between American and Chinese firms differ systematically, calibrating Chinese firms production function using American firms' parameter does not affect the dispersion in estimated input distortions and therefore does not affect the predicted TFP gains directly through the input distortions, but it affects the predicted gains through the aggregation across firms and through the estimated firm productivity. The variation in demand elasticities across industries explains about 25\% of the predicted TFP gains, but the variation within industries has a minor impact.
+
+\newpage
+
+%\singlespacing
+\setlength\bibsep{0pt}
+%\bibliographystyle{my-style}
+%\bibliography{Placeholder}
+\bibliography{references} % to use file created by filecontents ...
+\bibliographystyle{ecta} 
+
+\newpage
+
+%\doublespacing
+\onehalfspacing
+\appendix
+\noindent\textbf{\Huge Appendix}
+
+\section{Derivation of predicted TFP gains} \label{ASec:TFPgainsMarketShares}
+We first show how to derive the optimal prices. The optimal prices are always the expected marginal cost times $\epsilon_g/(\epsilon_g-1)$. For some given $Y_i$, firms' profits maximization problem can be formulated as, :
+
+\begin{align*}
+\min\limits_{K_i,L_i} &(R(1+\tau_i^K)K_i+wL_i)\E[e^{\delta_i}]\\
+\text{s.t. } & A_iK_i^{1-\alpha_s}L_i^{\alpha_s}\geq Y_i(1-\tau_i^Y)
+\end{align*}
+Expected marginal cost is the Lagrange multiplier of its Lagrange function 
+$$\min\limits_{K_i,L_i} (R(1+\tau_i^K)K_i+wL_i)-\lambda (A_iK_i^{1-\alpha_s}L_i^{\alpha_s}- Y_i(1-\tau_i^Y))$$
+Solving it gives expected marginal cost:
+$$\E[MC(Y_i)]=\left( \frac{1}{A_i} \right)^{\frac{1}{\alpha_g^L+\alpha_g^K}}Y_i^{\frac{1-\alpha_g^L-\alpha_g^K}{\alpha_g^L+\alpha_g^K}}\left( \frac{R(1+\tau_i^K)}{\alpha_g^K(1-\tau_i^Y)} \right)^{\frac{\alpha_g^K}{\alpha_g^L+\alpha_g^K}}\left( \frac{w}{\alpha_g^L(1-\tau_i^Y)} \right)^{\frac{\alpha_g^L}{\alpha_g^L+\alpha_g^K}}$$ 
+where $\alpha_g^K=1-\alpha_s$ and $\alpha_g^L=\alpha_s$ for firm $i$ from nest $g$ in industry $s$. The optimal prices are:
+$$P_{i}=\frac{\epsilon_g}{\epsilon_g-1} \cdot \underbrace{\left( \frac{1}{A_i} \right)^{\frac{1}{\alpha_g^L+\alpha_g^K}}Y_i^{\frac{1-\alpha_g^L-\alpha_g^K}{\alpha_g^L+\alpha_g^K}}\left( \frac{R(1+\tau_i^K)}{\alpha_g^K(1-\tau_i^Y)} \right)^{\frac{\alpha_g^K}{\alpha_g^L+\alpha_g^K}}\left( \frac{w}{\alpha_g^L(1-\tau_i^Y)} \right)^{\frac{\alpha_g^L}{\alpha_g^L+\alpha_g^K}}}_{\text{expected marginal cost}}$$ 
+The nest-level TFP as a weighted sum of firm-level TFP is the same as the one in HK because the expression only requires the type-level aggregator to be CES:
+\begin{align}
+\text{TFP}_g=&\text{TFPR}_g\cdot \frac{1}{P_g} \nonumber\\
+=&\text{TFPR}_g \cdot \left(\sum_{i \in \mathcal{G}(g)}P_{i}^{1-\epsilon_g} \right)^{1/(\epsilon_g-1))}\nonumber\\
+=&\text{TFPR}_g \cdot \left(\sum_{i \in \mathcal{G}(g)}\left( \frac{A_i}{\text{TFPR}_i} \right)^{\epsilon_g-1} \right)^{1/(\epsilon_g-1))}\nonumber\\
+=&\left( \sum_{i \in \mathcal{G}(g)}\left( A_i \cdot \frac{\text{TFPR}_g}{\text{TFPR}_i} \right)^{\epsilon_g-1} \right)^{\frac{1}{\epsilon_g-1}}\label{AEq:TFPg}
+\end{align}
+
+From the definition of TFPR:
+\begin{align*}
+\text{TFPR}_g=&\left( \frac{P_gY_g}{K_g} \right)^{\alpha^K_g}\left( \frac{P_gY_g}{L_g} \right)^{\alpha^L_g}(P_gY_g)^{1-\alpha^K_s-\alpha^L_g}\\
+\text{TFPR}_i=&\left( \frac{P_iY_i}{K_i} \right)^{\alpha^K_g}\left( \frac{P_iY_i}{L_i} \right)^{\alpha^L_g}(P_iY_i)^{1-\alpha^K_g-\alpha^L_g}
+\end{align*}
+
+Firms' profit maximization also gives:
+\begin{align*}
+\frac{K_i}{P_gY_g}=&\frac{\epsilon_g-1}{\epsilon_g}\cdot \frac{\alpha_g^K(1-\tau_i^Y)}{(1+\tau_i^K)R} \cdot \frac{P_iY_i}{P_gY_g}\\
+\frac{L_i}{P_gY_g}=&\frac{\epsilon_g-1}{\epsilon_g}\cdot \frac{\alpha^L_g(1-\tau_i^Y)}{w} \cdot \frac{P_iY_i}{P_gY_g}\\
+\frac{K_i}{P_iY_i}=&\frac{\epsilon_g-1}{\epsilon_g}\cdot \frac{\alpha^K_g(1-\tau_i^Y)}{(1+\tau_i^K)R}\\
+\frac{L_i}{P_iY_i}=&\frac{\epsilon_g-1}{\epsilon_g}\cdot \frac{\alpha^L_g(1-\tau_i^Y)}{w}
+\end{align*}
+Plug these into TFPR$_i$ and TFPR$_g$:
+\begin{align*}
+\text{TFPR}_i=&\left( \frac{\epsilon_g-1}{\epsilon_g}\cdot \frac{\alpha^K_s(1-\tau_i^Y)}{(1+\tau_i^K)R} \right)^{-\alpha^K_s} \left( \frac{\epsilon_g-1}{\epsilon_g}\cdot \frac{\alpha^L_s(1-\tau_i^Y)}{w} \right)^{-\alpha^L_s} \cdot (P_iY_i)^{1-\alpha^K_s-\alpha^L_s}\\
+=&\underbrace{(1+\tau_i^K)^{\alpha^K_s}(1-\tau_i^Y)^{-(\alpha_L+\alpha_K)}\left( \frac{R}{\alpha^K_s} \right)^{\alpha^K_s} \left( \frac{w}{\alpha^L_s} \right)^{\alpha^L_s} \left( \frac{\epsilon_g}{\epsilon_g-1} \right)^{\alpha^K_s+\alpha^L_s}}_{\text{Same as CRS}}(P_iY_i)^{1-\alpha^K_s-\alpha^L_s}\\
+\text{TFPR}_g=&\left( \sum_{i \in \mathcal{G}(g)} \frac{\epsilon_g-1}{\epsilon_g}\cdot \frac{\alpha^K_s(1-\tau_i^Y)}{(1+\tau_i^K)R} \cdot \frac{P_iY_i}{P_gY_g} \right)^{-\alpha^K_s} \left( \sum_{i \in \mathcal{G}(g)} \frac{\epsilon_g-1}{\epsilon_g}\cdot \frac{\alpha^L_s(1-\tau_i^Y)}{w} \cdot \frac{P_iY_i}{P_gY_g} \right)^{-\alpha^L_s} \\
+&\cdot (P_gY_g)^{1-\alpha^K_s-\alpha^L_s}\\
+=&\underbrace{\left( \sum_{i \in \mathcal{G}(g)}\frac{(1-\tau_i^Y)}{1+\tau_i^K} \cdot \frac{P_iY_i}{P_gY_g} \right)^{-\alpha^K_s} \left( \sum_{i \in \mathcal{G}(g)}(1-\tau_i^Y) \cdot \frac{P_iY_i}{P_gY_g} \right)^{-\alpha^L_s}}_{\text{Same as CRS}} \\
+& \underbrace{\left( \frac{R}{\alpha^K_s} \right)^{\alpha^K_s} \left( \frac{w}{\alpha^L_s} \right)^{\alpha^L_s}\left( \frac{\epsilon_g}{\epsilon_g-1} \right)^{\alpha^K_s+\alpha^L_s}}_{\text{Same as CRS}}\\
+& \cdot (P_gY_g)^{1-\alpha^K_s-\alpha^L_s}
+\end{align*}
+
+In the code, we use an equivalent but easier formula because $K_g$ and $wL_g$ are observed. Follow HK, we define:
+\begin{align*}
+\text{MPK}_g \equiv &\sum_{i \in \mathcal{G}(g)}\frac{P_iY_i(1-\tau_i^Y)}{P_gY_g(1+\tau_i^K)}=\frac{\epsilon_g}{\epsilon_g-1}\cdot \frac{R}{\alpha^K_s} \cdot \frac{K_g}{P_gY_g}\\
+\text{MPL}_g \equiv &\sum_{i \in \mathcal{G}(g)}\frac{P_iY_i(1-\tau_i^Y)}{P_gY_g}=\frac{\epsilon_g}{\epsilon_g-1}\cdot \frac{w}{\alpha^L_s} \cdot \frac{L_g}{P_gY_g}
+\end{align*}
+Then we can write:
+$$\frac{\text{TFPR}_i}{\text{TFPR}_g}=\underbrace{ (1+\tau_i^K)^{\alpha^K_s}(1-\tau_i^Y)^{-(\alpha^L_s+\alpha_s^K)}\text{MPK}_g^{\alpha^K_s}\text{MPL}_g^{\alpha^L_s} }_{\text{Same as CRS}} \left( \frac{P_iY_i}{P_gY_g} \right)^{1-1-\alpha_s-\alpha_s} $$
+
+Nest, we derive the equilibrium market shares $\frac{P_iY_i}{P_gY_g}$. Using the optimal pricing rule, we can write the price ratio of two firms from the same nest as:
+$$\frac{P_i}{P_j}=\left( \frac{A_j}{A_i} \right)^{\frac{1}{\alpha^L_s+\alpha^K_s}}\left( \frac{Y_i}{Y_j} \right)^{\frac{1}{\alpha^L_s+\alpha^K_s}-1}\left( \frac{1+\tau_i^K}{1+\tau_j^K} \right)^{\frac{\alpha^K}{\alpha^L_s+\alpha^K_s}}\left( \frac{1-\tau_j^Y}{1-\tau_i^Y} \right)$$
+Using demand side equation, $\frac{Y_i}{Y_j}=\left( \frac{P_i}{P_j} \right)^{-\epsilon_g}$, this can be rewritten as 
+$$\left( \frac{P_i}{P_j} \right)^{1+\epsilon_g\left(\frac{1}{\alpha_s+1-\alpha_s}-1\right)}=\left( \frac{A_j}{A_i} \right)^{\frac{1}{\alpha^L_s+\alpha^K_s}}\left( \frac{1+\tau_i^K}{1+\tau_j^K} \right)^{\frac{\alpha^K}{\alpha^L_s+\alpha^K_s}}\left( \frac{1-\tau_j^Y}{1-\tau_i^Y} \right)$$
+Demand side tells us, $\frac{P_iY_i}{P_jY_j}=\left( \frac{P_i}{P_j} \right)^{1-\epsilon}$, therefore
+$$\frac{P_iY_i}{P_jY_j}=\left( \frac{A_j}{A_i} \right)^{\frac{1-\epsilon_g}{(1-\epsilon_g)(\alpha^L_s+\alpha^K_s)+\epsilon_g}}\left( \frac{1+\tau_i^K}{1+\tau_j^K} \right)^{\frac{\alpha^K(1-\epsilon_g)}{(1-\epsilon_g)(\alpha^L_s+\alpha^K_s)+\epsilon_g}}\left( \frac{1-\tau_j^Y}{1-\tau_i^Y} \right)^{\frac{(\alpha^L+\alpha^K)(1-\epsilon_g)}{(1-\epsilon_g)(\alpha^L_s+\alpha^K_s)+\epsilon_g}}$$
+Thus,
+$$P_iY_i \propto \left( \frac{1}{A_i}\right)^{\frac{1-\epsilon_g}{(1-\epsilon_g)(\alpha^L_s+\alpha^K_s)+\epsilon_g}} (1+\tau_i^K)^{\frac{\alpha^K(1-\epsilon_g)}{(1-\epsilon_g)(\alpha^L_s+\alpha^K_s)+\epsilon_g}}(1-\tau_i^Y)^{-\frac{(\alpha^L+\alpha^K)(1-\epsilon_g)}{(1-\epsilon_g)(\alpha^L_s+\alpha^K_s)+\epsilon_g}} \equiv W_i$$
+Hence,
+$$\frac{P_iY_i}{P_gY_g}=\frac{W_i}{\sum_{j\in g}W_j}$$
+Plug the formula of $\frac{P_iY_i}{P_gY_g}$ in $\frac{\text{TFPR}_i}{\text{TFPR}_g}$:
+\begin{align}
+\frac{\text{TFPR}_i}{\text{TFPR}_g}=&\Gamma_i\cdot \left( \frac{\Gamma_i}{A_i} \right)^{\theta_g(1-\alpha_g^K-\alpha_g^L)} \cdot \left( \sum_{i\in\mathcal{G}(g)} \left( \frac{\Gamma_i}{A_i} \right)^{\theta_g}\right)^{-1} \nonumber\\
+&\cdot \left( \sum_{i\in\mathcal{G}(g)} \left( \frac{\Gamma_i}{A_i} \right)^{\theta_g}\frac{1-\tau_i^Y}{1+\tau_i^K}\right)^{\alpha_g^K} \cdot \left( \sum_{i\in\mathcal{G}(g)} \left( \frac{\Gamma_i}{A_i} \right)^{\theta_g}(1-\tau_i^Y)\right)^{\alpha_g^L} \label{AEq:TFPRratio}
+\end{align}
+where
+\begin{align*}
+\Gamma_i\equiv & (1+\tau_i^K)^{\alpha_g^K}(1-\tau_i^Y)^{-(\alpha_g^L+\alpha_g^K)}\\
+\theta_g\equiv & \frac{1-\epsilon_g}{(1-\epsilon_g)(\alpha_g^K+\alpha_g^L)+\epsilon_g}
+\end{align*}
+Using $\Gamma_i$ and $\theta_g$, we can rewrite the equilibrium market shares as:
+\begin{align}
+\frac{P_iY_i}{P_gY_g} = \frac{\left( \frac{\Gamma_i}{A_i} \right)^{\theta_g}}{\sum_{i \in \mathcal{G}(g)}\left( \frac{\Gamma_i}{A_i} \right)^{\theta_g}} \label{AEq:marketShares}
+\end{align}
+Combine Equation~\eqref{AEq:TFPg} and Equation~\eqref{AEq:TFPRratio} gives:
+\begin{align}
+\text{TFP}_g=&\left( \sum_{i\in\mathcal{G}(g)}\left( \frac{\Gamma_i}{A_i} \right)^{\theta_g} \right)^{\frac{\epsilon_g}{\epsilon_g-1}} \cdot \left( \sum_{i\in\mathcal{G}(g)}\left( \frac{\Gamma_i}{A_i} \right)^{\theta_g} \frac{1-\tau_i^Y}{1+\tau_i^K}\right)^{-\alpha_g^K} \cdot \left( \sum_{i\in\mathcal{G}(g)}\left( \frac{\Gamma_i}{A_i} \right)^{\theta_g} (1-\tau_i^Y)\right)^{-\alpha_g^L}  \label{AEq:TFPg2}
+\end{align}
+
+When there are no distortions, then $\tau_i^K$ and $\tau_i^Y$ are set to 0. From Equation~\eqref{AEq:marketShares}:
+$$\frac{P_i^*Y_i^*}{P_g^*Y_g^*} = \frac{A_i^{-\theta_g}}{\sum_{i \in g}A_i^{-\theta_g}}$$
+From Equation~\eqref{AEq:TFPg2}:
+$$\text{TFP}_g^*=\left( \sum_{i \in \mathcal{G}(g)} A_i^{-\theta_g}  \right)^{-\frac{1}{\theta_g}}$$
+%$$\text{TFP}_g^*=\left( \sum_{i \in \mathcal{G}(g)}\left( A_i \cdot \left( \frac{P_g^*Y_g^*}{P_i^*Y_i^*} \right)^{1-1-\alpha_s-\alpha_s} \right)^{\epsilon_g-1} \right)^{\frac{1}{\epsilon_g-1}}$$
+%%$\frac{P_i^*Y_i^*}{P_g^*Y_g^*}$ is decided by demand $\frac{P_iY_i}{P_gY_g}=\left( \frac{P_{ig}}{P_g} \right)^{1-\epsilon_g}$.
+%Since firms inside the same g has the same demand elasticities and expected cost shocks, for any firm i and j from the same g:
+%$$\frac{Y_i^*}{Y_j^*}=\left( \frac{P_i^*}{P_j^*} \right)^{-\epsilon_g}=\left( \frac{\left( \frac{1}{A_i} \right)^{1/(\alpha_s+1-\alpha_s)}(Y_i^*)^{\frac{1-\alpha_s-1-\alpha_s}{\alpha_s+1-\alpha_s}}}{\left( \frac{1}{A_j} \right)^{1/(\alpha_s+1-\alpha_s)}(Y_j^*)^{\frac{1-\alpha_s-1-\alpha_s}{\alpha_s+1-\alpha_s}}} \right)^{-\epsilon_g}$$
+%The first equation is due to the demand structure and the second equation simply plug in the expression of optimal prices. Solve for $Y_i^*/Y_j^*$:
+%$$\frac{Y_i^*}{Y_j^*}=\left( \frac{A_i}{A_j} \right)^{\frac{\epsilon_g}{\epsilon_g+(\alpha_s+1-\alpha_s)(1-\epsilon_g)}}$$
+%From the demand structure, $\frac{P_iY_i}{P_gY_g}=\left( \frac{P_i}{P_g} \right)^{1-\epsilon_g}$ which also means $\frac{Y_i}{Y_g}=\left( \frac{P_i}{P_g} \right)^{-\epsilon_g}$, thus 
+%$$\frac{P_iY_i}{P_jY_j}=\left( \frac{P_i}{P_j} \right)^{1-\epsilon_g}=\left( \frac{P_i}{P_j} \right)^{-\epsilon_g\cdot\frac{1-\epsilon_g}{-\epsilon_g}}=\left( \frac{Y_i}{Y_j} \right)^{\frac{\epsilon_g-1}{\epsilon_g}}$$
+%Hence,
+%$$\frac{P_i^*Y_i^*}{P_j^*Y_j^*}=\left( \frac{A_i}{A_j} \right)^{\frac{\epsilon_g-1}{\epsilon_g+(1-\epsilon_g)(\alpha_s+1-\alpha_s)}}$$
+%which can be easily written as:
+%$$\frac{P_i^*Y_i^*}{P_g^*Y_g^*} = \frac{A_i^{\frac{\epsilon_g-1}{\epsilon_g+(1-\epsilon_g)(\alpha_L+\alpha_K)}}}{\sum_{i \in g}A_i^{\frac{\epsilon_g-1}{\epsilon_g+(1-\epsilon_g)(\alpha_L+\alpha_K)}}}$$
+%
+%
+%\subsection{TFP gains under homogeneous demand elasticities with known primitives} \label{ASec: eqMarketShare} 
+%This sections provides derivations of formulas used when calculating TFP gains in the counterfactual scenario of homogeneous demand elasticities while keep all the other primitives the same as those estimated by our preferred model. This requires we first solve for the equilibrium of the economy given those primitives and than find predicted TFP gains when removing distortions. The formula of type-level TFP and TFPR ratio is the same as the one in Section~\ref{sec:model}
+%$$\text{TFP}_g=\left( \sum_{i \in g}\left( A_i \cdot \frac{\text{TFPR}_g}{\text{TFPR}_i} \right)^{\epsilon_g-1} \right)^{\frac{1}{\epsilon_g-1}}$$
+%\begin{align*}
+%\frac{\text{TFPR}_i}{\text{TFPR}_g}=&\underbrace{ (1+\tau_i^K)^{1-\alpha_s}(1+\tau_i^L)^{\alpha_s}\left( \sum_{i \in g}\frac{P_iY_i}{P_gY_g(1+\tau_i^K)} \right)^{1-\alpha_s}\left( \sum_{i \in g}\frac{P_iY_i}{P_gY_g(1+\tau_i^L)} \right)^{\alpha_s} }_{\text{Same as CRS}} \cdot \left( \frac{P_iY_i}{P_gY_g} \right)^{1-1-\alpha_s-\alpha_s}
+%\end{align*}
+%
+%Because we have known primitives, $A_i$, $\epsilon_g$, $\tau_i^K$, $\tau_i^L$, $1-\alpha_s$, and $\alpha_s$ are known. $\frac{P_iY_i}{P_gY_g}$ is the equilibrium sales share determined by those primitives and is the only unknown. 
+
+\section{Predicted TFP gains under different specifications using HK's data and our data}
+\label{ASec:TFPgainsComparison}
+When using HK's data, each industry can have only one nest because we do not observe firms' costs in their data. However, we can still estimate industry-specific demand elasticities using the method in ZX and replace HK's demand elasticities by estimated industry-specific demand elasticities.
+
+\input{Tables/TFPGainsComparison.tex}
+
+\section{HK's data, our data, and Chinese Yearbooks}
+ \label{ASec:dataVersion}
+%HK requires two key assumption: demand elasticities equals 3 and constant returns to scale. In this section, we relax these assumptions one by one to show how TFP gains react. Before doing this exercise, we first investigate the difference between our data and HK's. The evidence favors using our data.
+%
+%\subsection{Data versions}
+Both HK and we use the annual survey data of Chinese industries. Ours is a newer version acquired via Peking University. Table~\ref{Table:validityMyData} and Table~\ref{Table:validityHKData} show how much the aggregates of the two ASM data deviate from the counterpart macro variables published in China Statistical Yearbooks (CSYs) reported as percentage shares of those variables in CSYs. HK only have 1998-2005 so Table~\ref{Table:validityHKData} only reports these years. The differences between our data and CSYs are mostly around or below $2\%$ while those between HK's data and CSYs are around $10-20\%$. Our data contains around $0.05-0.1\%$ more firms than CSYs in each year except for 2004 and 2008 while HK's data contains around $20\%$ less firms in 1998-2002 and around $10\%$ less in 2003-2005. %Our data matches the CSY significantly bettern than HK's.
+
+
+%assume demand elasticities to be the same for all the firms and assume them to be 3. They also assume constant returns to scale and that production elasticities of capital and labor to be the same as those of American firms. In this section, we relax these assumptions one by one to show how TFP gains react to these assumptions. Since we use the latest version of ASM data, our data is a bit different from \citet{hsiehMisallocationManufacturingTFP2009}'s. To show how these assumptions affect our TFP gains, we also impose them on our data. The results are in Table~\ref{Table:TFPGainsComparison}.
+
+\begin{table}[htbp!]
+\centering
+\caption{Our data statistics in comparison with China Statistical Yearbook: ratio (\%)} 
+\label{Table:validityMyData}
+\resizebox{\textwidth}{!}{\begin{tabular}{lrrrrrrrr}
+  \hline
+Year & Number of firms & Sales & Output & Value added & Employment & Net value of fixed assets & Export & profits \\ 
+  \hline
+1998 & 0.05 & 0.41 & 0.38 & 0.41 & -8.56 & 1.48 & 0.58 & -2.76 \\ 
+  1999 & 0.04 & 0.94 & 1.02 & 0.92 & 0.46 & -2.21 & 1.19 & 0.20 \\ 
+  2000 & 0.06 & 0.54 & 0.51 & 0.45 & 0.39 & -1.31 & 0.11 & 0.09 \\ 
+  2001 & 0.06 & 0.89 & 1.26 & 1.14 & 0.54 & -1.50 & 0.81 & 1.91 \\ 
+  2002 & 0.07 & 0.84 & 0.83 & 0.83 & 0.37 & -1.57 & 0.16 & 0.64 \\ 
+  2003 & 0.10 & 1.80 & 1.78 & 1.88 & 1.00 & -1.41 & 1.59 & 2.32 \\ 
+  2004 & -0.54 & 0.78 & 0.74 & 5.20 & 0.98 & -2.72 & 1.06 & 1.95 \\ 
+  2005 & 0.09 & 1.24 & 1.22 & 1.30 & 1.14 & -2.76 & 1.17 & 1.39 \\ 
+  \hline
+  2006 & 0.12 & 1.38 & 1.18 & 1.12 & 0.64 & -3.01 & 3.05 & 1.23 \\ 
+  2007 & 0.13 & 1.95 & 1.64 & 2.14 & 1.52 & -3.06 & 1.96 & 3.48 \\ 
+  2008 & -3.30 & -0.74 & -1.40 &  & -2.74 & -6.02 & -0.46 & -1.28 \\ 
+  \hline\hline
+   \multicolumn{9}{l}{Notes: all the variables are from from the latest available yearbook issue.}\\
+%   &\multicolumn{8}{l}{The rest of yearbook data is from the latest available issue.}\\
+   &\multicolumn{8}{l}{Export data of China Statistical Yearbook is from \citet{brandtChallengesWorkingChinese2014}.}
+\end{tabular}}
+\end{table}
+
+\begin{table}[htbp!]
+\centering
+\caption{HK's data statistics in comparison with China Statistical Yearbook: ratio (\%)} 
+\label{Table:validityHKData}
+\resizebox{0.9\textwidth}{!}{\begin{tabular}{lrrrrrr}
+  \hline
+Year & Number of firms & Sales & Value added & Employment & Net value of fixed assets & Export \\ 
+  \hline
+1998 & -27.87 & -14.74 & -20.19 & -23.24 & -16.69 & -19.12 \\ 
+  1999 & -26.09 & -12.22 & -18.62 & -19.84 & -15.23 & -14.09 \\ 
+  2000 & -23.14 & -9.04 & -12.81 & -20.92 & -2.53 & -10.47 \\ 
+  2001 & -22.17 & -10.44 & -13.85 & -19.17 & -2.57 & -11.41 \\ 
+  2002 & -19.00 & -8.19 & -11.54 & -14.64 & 0.15 & -9.13 \\ 
+  2003 & -14.15 & -5.95 & -5.96 & -10.24 & 2.14 & -6.34 \\ 
+  2004 & -9.44 & -4.95 & -10.34 & 33.13 & -2.94 &  \\ 
+  2005 & -8.40 & -4.63 & -12.66 & -6.19 & -2.74 & -4.75 \\ 
+  \hline\hline
+  \multicolumn{7}{l}{\small Notes: all the variables are from from the latest available yearbook issue.}\\
+    &\multicolumn{6}{l}{\small Export data of China Statistical Yearbook is from \citet{brandtChallengesWorkingChinese2014}.}
+\end{tabular}}
+\end{table}
+
+
+\end{document}
+
+
+
+%\section{Discussions} \label{sec:discussion}
+
+%\section{Conclusion} \label{sec:conclusion}
+
+
+
+%\clearpage
+%
+%\onehalfspacing
+%
+%\section*{Tables} \label{sec:tab}
+%\addcontentsline{toc}{section}{Tables}
+
+
+
+%\clearpage
+%
+%\section*{Figures} \label{sec:fig}
+%\addcontentsline{toc}{section}{Figures}
+%
+%%\begin{figure}[hp]
+%%  \centering
+%%  \includegraphics[width=.6\textwidth]{../fig/placeholder.pdf}
+%%  \caption{Placeholder}
+%%  \label{fig:placeholder}
+%%\end{figure}
+%
+%
+%
+%
+%\clearpage
+%
+%\section*{Appendix A. Placeholder} \label{sec:appendixa}
+%\addcontentsline{toc}{section}{Appendix A}
+
+
